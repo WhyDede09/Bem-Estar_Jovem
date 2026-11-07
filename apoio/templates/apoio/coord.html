@@ -5,7 +5,7 @@
   <header class="navbar bg-neutral text-neutral-content shadow">
     <div class="mx-auto flex w-full max-w-6xl items-center px-2">
       <a href="{% url 'painel' %}" class="btn btn-ghost text-lg font-bold">
-        <i class="bi bi-shield-fill-check text-accent"></i> Escudo <span class="badge badge-secondary badge-sm">Coordenação</span></a>
+        <i class="bi bi-shield-fill-check text-accent"></i> Colégio Esperança <span class="badge badge-secondary badge-sm">Coordenação</span></a>
       <div class="flex-1"></div>
       {% if user.is_staff %}
       <span class="hidden px-2 text-sm opacity-80 sm:inline">{{ user.get_full_name|default:user.username }}</span>

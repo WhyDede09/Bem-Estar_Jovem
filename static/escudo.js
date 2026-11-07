@@ -1,4 +1,4 @@
-// Sair rápido: troca a página sem deixar o Escudo no "voltar" do navegador.
+// Sair rápido: troca a página sem deixar o sistema no "voltar" do navegador.
 (() => {
   const btn = document.getElementById("sair-rapido");
   if (!btn) return;

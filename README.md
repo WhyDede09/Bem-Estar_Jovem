@@ -1,4 +1,4 @@
-# Escudo 🛡️
+# Sistema de Denúncia · Colégio Esperança 🛡️
 
 Apoio contra cyberbullying para estudantes: o que fazer agora, como ajudar um colega
 e como avisar a escola **sem se identificar**. Django + JS + Tailwind CSS + daisyUI.
@@ -45,7 +45,7 @@ python manage.py runserver
 - **Provas privadas**: anexos ficam em `provas/`, fora das pastas públicas; só a coordenação logada baixa.
   Imagem íntima: o sistema orienta a **não** anexar.
 - **Fatos, não perfis**: a coordenação vê o que aconteceu, onde e quando, nunca um "nível emocional" do aluno.
-- **Sair rápido**: botão fixo (ou `Esc` 2x) troca a página sem deixar o Escudo no "voltar".
-- **Sem diagnóstico**: o Escudo orienta e encaminha (CVV 188, 190, SaferNet, escola); não substitui profissionais.
+- **Sair rápido**: botão fixo (ou `Esc` 2x) troca a página sem deixar o sistema no "voltar".
+- **Sem diagnóstico**: o sistema orienta e encaminha (CVV 188, 190, SaferNet, escola); não substitui profissionais.
 
 Todos os relatos de demonstração são fictícios.
