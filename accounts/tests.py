@@ -38,3 +38,19 @@ class EntrarSairTests(TestCase):
         resposta = self.client.post("/coordenacao/sair/")
         self.assertRedirects(resposta, "/coordenacao/entrar/")
         self.assertNotIn("_auth_user_id", self.client.session)
+
+
+class AdminUsuarioTests(TestCase):
+    def test_formulario_criar_usuario_inclui_opcao_staff(self):
+        User = get_user_model()
+        administrador = User.objects.create_superuser(
+            username="admin",
+            email="admin@example.com",
+            password="senha-forte-123",
+        )
+        self.client.force_login(administrador)
+
+        resposta = self.client.get("/admin/auth/user/add/")
+
+        self.assertEqual(resposta.status_code, 200)
+        self.assertContains(resposta, 'name="is_staff"')

@@ -1,7 +1,15 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin
 from apoio.models import Denuncia
 from django.utils import timezone
 from django.utils.html import format_html
+
+
+class UsuarioAdmin(UserAdmin):
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ("Acesso à equipe", {"fields": ("is_staff",)}),
+    )
 
 
 class DenunciaAdmin (admin.ModelAdmin):
@@ -75,3 +83,7 @@ class DenunciaAdmin (admin.ModelAdmin):
 
 
 admin.site.register(Denuncia, DenunciaAdmin)
+
+Usuario = get_user_model()
+admin.site.unregister(Usuario)
+admin.site.register(Usuario, UsuarioAdmin)
