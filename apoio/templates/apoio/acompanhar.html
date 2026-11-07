@@ -1,0 +1,36 @@
+{% extends "apoio/base.html" %}
+{% block titulo %}Acompanhar relato{% endblock %}
+{% block corpo %}
+<div class="mx-auto" style="max-width: 600px">
+  <h1 class="h3 fw-bold">Acompanhar relato</h1>
+  <form method="post" class="d-flex gap-2 my-3">
+    {% csrf_token %}
+    <input name="protocolo" class="form-control form-control-lg font-monospace text-uppercase" placeholder="ESC-XXXX-XXXX"
+           value="{{ codigo }}" required autocomplete="off" aria-label="Protocolo">
+    <button class="btn btn-primary btn-lg">Ver</button>
+  </form>
+
+  {% if erro %}<div class="alert alert-warning">Não encontramos esse protocolo. Confira as letras e os números.</div>{% endif %}
+
+  {% if d %}
+  {% with s=d.status %}
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-secondary small">Enviado em {{ d.criada|date:"d/m/Y" }}</span>
+        <span class="badge fs-6 {% if s == 'encerrada' %}text-bg-secondary{% elif s == 'recebida' %}text-bg-info{% else %}text-bg-primary{% endif %}">{{ d.get_status_display }}</span>
+      </div>
+      <ol class="list-unstyled d-flex justify-content-between small text-center mb-4">
+        {% for valor, nome in d.Status.choices %}
+          <li class="flex-fill {% if valor == s %}fw-bold text-primary{% else %}text-secondary{% endif %}">{{ nome }}</li>
+        {% endfor %}
+      </ol>
+      <h2 class="h6">Mensagem da coordenação</h2>
+      {% if d.resposta %}<p class="bg-light rounded p-3 mb-0" style="white-space: pre-line">{{ d.resposta }}</p>
+      {% else %}<p class="text-secondary mb-0">Ainda sem mensagem. A coordenação já recebeu seu relato.</p>{% endif %}
+    </div>
+  </div>
+  {% endwith %}
+  {% endif %}
+</div>
+{% endblock %}

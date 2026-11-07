@@ -1,0 +1,23 @@
+{% extends "apoio/base.html" %}
+{% block titulo %}Coordenação{% endblock %}
+{% block corpo %}
+<div class="mx-auto" style="max-width: 380px">
+  <form method="post" class="card border-0 shadow-sm">
+    {% csrf_token %}
+    <div class="card-body p-4">
+      <h1 class="h5 fw-bold mb-3"><i class="bi bi-person-badge"></i> Acesso da coordenação</h1>
+      <div class="mb-3">
+        <label class="form-label" for="id_username">Usuário</label>
+        <input class="form-control" id="id_username" name="username" autocomplete="username" required autofocus>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="id_password">Senha</label>
+        <input class="form-control" id="id_password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      {% if form.errors %}<div class="alert alert-danger py-2 small">Usuário ou senha incorretos.</div>{% endif %}
+      <input type="hidden" name="next" value="{{ next }}">
+      <button class="btn btn-primary w-100">Entrar</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

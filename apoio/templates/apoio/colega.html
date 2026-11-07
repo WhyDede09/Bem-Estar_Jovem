@@ -1,0 +1,61 @@
+{% extends "apoio/base.html" %}
+{% block titulo %}Ajudar um colega{% endblock %}
+{% block corpo %}
+<div class="mx-auto" style="max-width: 820px">
+  <h1 class="h3 fw-bold">Vi acontecer com alguém. Como ajudo?</h1>
+  <p class="text-secondary">Quem assiste e não faz nada dá força para quem ataca. Mas ajudar do jeito errado pode expor ainda mais o colega.</p>
+
+  <div class="row g-3 my-2">
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm h-100 border-start border-success border-4">
+        <div class="card-body">
+          <h2 class="h5 text-success"><i class="bi bi-check-circle"></i> Faça</h2>
+          <ul class="mb-0">
+            <li>Fale com a pessoa <strong>no privado</strong>, não no grupo.</li>
+            <li>Diga que viu e que <strong>não concorda</strong>.</li>
+            <li><strong>Pergunte</strong> o que ela quer, sem decidir por ela.</li>
+            <li>Guarde prints <strong>para entregar à escola</strong>, não para circular.</li>
+            <li>Denuncie o post/perfil na plataforma (é anônimo).</li>
+            <li>Avise a escola, mesmo sem se identificar.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm h-100 border-start border-danger border-4">
+        <div class="card-body">
+          <h2 class="h5 text-danger"><i class="bi bi-x-circle"></i> Não faça</h2>
+          <ul class="mb-0">
+            <li><strong>Não compartilhe</strong> o print/foto/vídeo, nem "para mostrar como é absurdo".</li>
+            <li>Não reaja com emoji ou risada no grupo.</li>
+            <li>Não exponha a vítima perguntando em público "você tá bem?".</li>
+            <li>Não parta para o ataque contra quem fez: isso costuma piorar para a vítima.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="h5 mt-4">Não sabe o que dizer? Copie e mande no privado:</h2>
+  <div class="list-group mb-4">
+    <div class="list-group-item d-flex justify-content-between align-items-center gap-2">
+      <span>"Vi o que mandaram no grupo. Isso foi zoado e não tem nada a ver com você. Tô aqui se quiser conversar."</span>
+      <button class="btn btn-sm btn-outline-primary text-nowrap" data-copiar="Vi o que mandaram no grupo. Isso foi zoado e não tem nada a ver com você. Tô aqui se quiser conversar."><i class="bi bi-clipboard"></i> Copiar</button>
+    </div>
+    <div class="list-group-item d-flex justify-content-between align-items-center gap-2">
+      <span>"Quer que eu vá com você falar com alguém da escola? Ou prefere que eu avise sem falar seu nome?"</span>
+      <button class="btn btn-sm btn-outline-primary text-nowrap" data-copiar="Quer que eu vá com você falar com alguém da escola? Ou prefere que eu avise sem falar seu nome?"><i class="bi bi-clipboard"></i> Copiar</button>
+    </div>
+    <div class="list-group-item d-flex justify-content-between align-items-center gap-2">
+      <span>"Denunciei o post. Se aparecer mais coisa, me fala que eu ajudo a guardar os prints."</span>
+      <button class="btn btn-sm btn-outline-primary text-nowrap" data-copiar="Denunciei o post. Se aparecer mais coisa, me fala que eu ajudo a guardar os prints."><i class="bi bi-clipboard"></i> Copiar</button>
+    </div>
+    <div class="list-group-item d-flex justify-content-between align-items-center gap-2">
+      <span><em>Para o grupo:</em> "Gente, isso passou do limite. Bora parar de compartilhar."</span>
+      <button class="btn btn-sm btn-outline-primary text-nowrap" data-copiar="Gente, isso passou do limite. Bora parar de compartilhar."><i class="bi bi-clipboard"></i> Copiar</button>
+    </div>
+  </div>
+
+  <a href="{% url 'denunciar' %}?quem=colega" class="btn btn-primary btn-lg"><i class="bi bi-envelope-paper"></i> Avisar a escola sobre o que vi</a>
+</div>
+{% endblock %}

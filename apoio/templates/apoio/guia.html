@@ -1,0 +1,100 @@
+{% extends "apoio/base.html" %}
+{% block titulo %}O que fazer agora{% endblock %}
+{% block corpo %}
+<div class="mx-auto" style="max-width: 720px">
+  <div class="d-flex justify-content-between small text-secondary mb-1"><span>O que fazer agora</span><span id="contador">Passo 1 de 4</span></div>
+  <div class="progress mb-4" style="height: 6px"><div class="progress-bar" id="barra" style="width: 25%"></div></div>
+
+  <section class="passo card border-0 shadow-sm" data-passo="1">
+    <div class="card-body p-4">
+      <h1 class="h4"><i class="bi bi-wind text-primary"></i> Primeiro: respira.</h1>
+      <p>O que estão fazendo com você <strong>não é culpa sua</strong>, mesmo que digam que é "só brincadeira".</p>
+      <ul>
+        <li><strong>Não responda no calor do momento.</strong> Responder costuma aumentar o ataque e pode ser usado contra você.</li>
+        <li>Se puder, <strong>silencie as notificações</strong> do grupo ou app por agora.</li>
+        <li>Se você ou alguém corre <strong>perigo imediato</strong>, ligue <strong>190</strong>. Se precisar conversar com alguém agora, o <strong>CVV atende no 188</strong>, 24h, de graça e sem julgamento.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="passo card border-0 shadow-sm d-none" data-passo="2">
+    <div class="card-body p-4">
+      <h1 class="h4"><i class="bi bi-camera text-primary"></i> Guarde as provas</h1>
+      <p>Antes de bloquear ou de alguém apagar, salve o que aconteceu. Isso ajuda a escola e, se for preciso, a polícia.</p>
+      <div class="list-group mb-3">
+        <label class="list-group-item"><input class="form-check-input me-2" type="checkbox"> Print da mensagem/post <strong>com data e hora</strong> aparecendo</label>
+        <label class="list-group-item"><input class="form-check-input me-2" type="checkbox"> Print do <strong>perfil</strong> de quem enviou (nome de usuário visível)</label>
+        <label class="list-group-item"><input class="form-check-input me-2" type="checkbox"> <strong>Link</strong> do post ou perfil copiado</label>
+        <label class="list-group-item"><input class="form-check-input me-2" type="checkbox"> Nome do <strong>grupo</strong> e de quem estava nele, se for grupo</label>
+      </div>
+      <div class="alert alert-warning small mb-0"><i class="bi bi-exclamation-triangle"></i>
+        Se for uma foto íntima sua: <strong>não reenvie para ninguém</strong>, nem para "provar". Guarde só o print do perfil/conversa e procure a escola ou a SaferNet.</div>
+    </div>
+  </section>
+
+  <section class="passo card border-0 shadow-sm d-none" data-passo="3">
+    <div class="card-body p-4">
+      <h1 class="h4"><i class="bi bi-slash-circle text-primary"></i> Bloqueie e denuncie na plataforma</h1>
+      <p>Onde aconteceu?</p>
+      <div class="btn-group flex-wrap mb-3" role="group" id="plataformas">
+        <button type="button" class="btn btn-outline-primary active" data-plat="whatsapp">WhatsApp</button>
+        <button type="button" class="btn btn-outline-primary" data-plat="instagram">Instagram</button>
+        <button type="button" class="btn btn-outline-primary" data-plat="tiktok">TikTok</button>
+        <button type="button" class="btn btn-outline-primary" data-plat="discord">Discord</button>
+        <button type="button" class="btn btn-outline-primary" data-plat="jogo">Jogo online</button>
+      </div>
+      <div class="bg-light rounded p-3" id="instrucao"></div>
+      <p class="small text-secondary mt-3 mb-0">A denúncia na plataforma é anônima: a pessoa não fica sabendo quem denunciou.</p>
+    </div>
+  </section>
+
+  <section class="passo card border-0 shadow-sm d-none" data-passo="4">
+    <div class="card-body p-4">
+      <h1 class="h4"><i class="bi bi-chat-heart text-primary"></i> Fale com alguém</h1>
+      <p>Você não precisa resolver isso sozinho(a). Escolha o que for mais confortável:</p>
+      <div class="row g-2">
+        <div class="col-sm-6"><a class="btn btn-primary w-100 py-3" href="{% url 'denunciar' %}?quem=comigo"><i class="bi bi-envelope-paper"></i><br>Avisar a escola<br><small>anônimo se quiser</small></a></div>
+        <div class="col-sm-6"><div class="border rounded p-3 h-100"><strong>Alguém de confiança</strong><br><small class="text-secondary">Um amigo, alguém da família, um professor de quem você gosta.</small></div></div>
+        <div class="col-sm-6"><div class="border rounded p-3 h-100"><strong>CVV: 188</strong><br><small class="text-secondary">Conversa sigilosa, 24h, também por chat em cvv.org.br.</small></div></div>
+        <div class="col-sm-6"><div class="border rounded p-3 h-100"><strong>SaferNet</strong><br><small class="text-secondary">Orientação e denúncia de crimes na internet (exposição, ódio, ameaça).</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="d-flex justify-content-between mt-3">
+    <button class="btn btn-outline-secondary" id="voltar" disabled><i class="bi bi-arrow-left"></i> Voltar</button>
+    <button class="btn btn-primary" id="avancar">Próximo <i class="bi bi-arrow-right"></i></button>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  // ponytail: instruções genéricas por plataforma; o caminho exato dos menus muda com as versões dos apps.
+  const INSTRUCOES = {
+    whatsapp: "Abra a conversa (ou o grupo) → toque no nome no topo → <strong>Denunciar</strong> e depois <strong>Bloquear</strong>. Em grupo, você também pode <strong>Sair do grupo</strong>. Tire os prints antes: ao denunciar, as últimas mensagens vão para o WhatsApp.",
+    instagram: "No post, comentário ou perfil, toque nos <strong>três pontinhos</strong> → <strong>Denunciar</strong>. No perfil você também pode <strong>Restringir</strong> (a pessoa não percebe) ou <strong>Bloquear</strong>.",
+    tiktok: "Segure o dedo no vídeo ou comentário → <strong>Denunciar</strong>. No perfil: ícone de compartilhar → <strong>Denunciar</strong> / <strong>Bloquear</strong>. Dá para limitar quem comenta nos seus vídeos em Privacidade.",
+    discord: "Clique com o botão direito (ou segure) na mensagem → <strong>Denunciar mensagem</strong>. No perfil da pessoa → <strong>Bloquear</strong>. Avise a moderação do servidor também.",
+    jogo: "Quase todo jogo tem <strong>Denunciar jogador</strong> no perfil ou no placar da partida, e opção de <strong>silenciar</strong> chat/voz. Anote o nome de usuário exato antes de sair da partida.",
+  };
+  const instr = document.getElementById("instrucao");
+  const botoes = document.querySelectorAll("#plataformas button");
+  const mostrar = (p) => { instr.innerHTML = INSTRUCOES[p]; botoes.forEach(b => b.classList.toggle("active", b.dataset.plat === p)); };
+  botoes.forEach(b => b.addEventListener("click", () => mostrar(b.dataset.plat)));
+  mostrar("whatsapp");
+
+  const passos = document.querySelectorAll(".passo");
+  let atual = 0;
+  const ir = (i) => {
+    atual = i;
+    passos.forEach((p, k) => p.classList.toggle("d-none", k !== i));
+    document.getElementById("barra").style.width = `${(i + 1) * 100 / passos.length}%`;
+    document.getElementById("contador").textContent = `Passo ${i + 1} de ${passos.length}`;
+    document.getElementById("voltar").disabled = i === 0;
+    document.getElementById("avancar").classList.toggle("invisible", i === passos.length - 1);
+    window.scrollTo({ top: 0 });
+  };
+  document.getElementById("avancar").addEventListener("click", () => ir(Math.min(atual + 1, passos.length - 1)));
+  document.getElementById("voltar").addEventListener("click", () => ir(Math.max(atual - 1, 0)));
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "apoio/base.html" %}
+{% block titulo %}Relato {{ d.protocolo }}{% endblock %}
+{% block corpo %}
+<a href="{% url 'painel' %}" class="small"><i class="bi bi-arrow-left"></i> Voltar ao painel</a>
+<div class="row g-4 mt-1">
+  <div class="col-lg-7">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4">
+        {% if d.urgente %}
+        <div class="alert alert-danger">
+          <strong><i class="bi bi-exclamation-octagon"></i> Urgente.</strong>
+          {% if d.risco %}Quem relatou marcou que alguém corre risco agora.{% else %}Relato de ameaça.{% endif %}
+          Priorize o contato e, se houver risco à integridade, acione a família e os serviços competentes (190 / Conselho Tutelar).
+        </div>
+        {% endif %}
+        <div class="d-flex justify-content-between">
+          <h1 class="h4 fw-bold">{{ d.get_tipo_display }}</h1>
+          <span class="font-monospace text-secondary small">{{ d.protocolo }}</span>
+        </div>
+        <dl class="row small mb-3">
+          <dt class="col-4">Plataforma</dt><dd class="col-8">{{ d.get_plataforma_display }}</dd>
+          <dt class="col-4">Quem relata</dt><dd class="col-8">{{ d.get_quem_display }}</dd>
+          <dt class="col-4">Quando</dt><dd class="col-8">{{ d.quando|default:"não informado" }}</dd>
+          <dt class="col-4">Recebido</dt><dd class="col-8">{{ d.criada|date:"d/m/Y H:i" }}</dd>
+          <dt class="col-4">Identificação</dt>
+          <dd class="col-8">{% if d.anonima %}<i class="bi bi-incognito"></i> Anônimo{% else %}{{ d.nome }} · {{ d.contato }}{% endif %}</dd>
+        </dl>
+        <h2 class="h6">Relato</h2>
+        <p class="bg-light rounded p-3" style="white-space: pre-line">{{ d.descricao }}</p>
+        {% if d.prova %}
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'prova' d.pk %}"><i class="bi bi-paperclip"></i> Abrir prova anexada</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <form method="post" class="card border-0 shadow-sm">
+      {% csrf_token %}
+      <div class="card-body p-4">
+        <h2 class="h6 fw-bold">Atualizar</h2>
+        <label class="form-label small" for="{{ form.status.id_for_label }}">Status</label>
+        {{ form.status }}
+        <label class="form-label small mt-3" for="{{ form.resposta.id_for_label }}">Mensagem para quem relatou</label>
+        {{ form.resposta }}
+        <div class="form-text">{% if d.anonima %}Anônimo: esta mensagem é o único canal com quem relatou.{% else %}Visível pelo protocolo. Para conversar, prefira chamar pessoalmente.{% endif %}</div>
+        <button class="btn btn-primary w-100 mt-3">Salvar</button>
+      </div>
+    </form>
+    <div class="card border-0 shadow-sm mt-3">
+      <div class="card-body small">
+        <h2 class="h6 fw-bold">Boas práticas de acolhimento</h2>
+        <ul class="mb-0 ps-3">
+          <li>Converse em local reservado; nunca exponha a vítima à turma.</li>
+          <li>Não promova "acareação" entre vítima e autor.</li>
+          <li>Registre só os fatos; não rotule o aluno.</li>
+          <li>Situações de risco, sofrimento intenso ou crime: envolva família, psicólogo(a) escolar e serviços competentes.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
