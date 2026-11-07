@@ -38,7 +38,6 @@ class DenunciaAdmin (admin.ModelAdmin):
     @admin.display(description="Prioridade", ordering="risco")
     def alerta(self, obj):
         if obj.risco:
-            # format_html exige argumentos no Django 6 (sem eles, TypeError)
             return format_html('<b style="color:{}">{}</b>', "#c62828", "⚠ RISCO AGORA")
         if obj.urgente: 
             return format_html('<b style="color:{}">{}</b>', "#ef6c00", "▲ Urgente")
@@ -54,7 +53,6 @@ class DenunciaAdmin (admin.ModelAdmin):
         n = queryset.update(status=novo_status, atualizada=timezone.now())
         self.message_user(request, f"{n} denúncia(s) atualizada(s).")
 
-    # status = valores de Denuncia.STATUS_CHOICES (Denuncia.Status não existe mais)
     @admin.action(description="Marcar como Em análise")
     def marcar_analise(self, request, queryset):
         self._mudar_status(request, queryset, "analise")
