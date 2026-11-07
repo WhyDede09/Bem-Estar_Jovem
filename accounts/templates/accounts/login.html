@@ -8,13 +8,13 @@
       <h1 class="card-title text-neutral"><i class="bi bi-person-badge"></i> Acesso da coordenação</h1>
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Usuário</legend>
-        <input class="input w-full" aria-label="Usuário" id="id_username" name="username" autocomplete="username" required autofocus>
+        <input class="input w-full" aria-label="Usuário" id="id_username" name="username" value="{{ usuario }}" autocomplete="username" required autofocus>
       </fieldset>
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Senha</legend>
         <input class="input w-full" aria-label="Senha" id="id_password" name="password" type="password" autocomplete="current-password" required>
       </fieldset>
-      {% if form.errors %}<div role="alert" class="alert alert-error alert-soft py-2 text-sm">Usuário ou senha incorretos.</div>{% endif %}
+      {% if erro %}<div role="alert" class="alert alert-error alert-soft py-2 text-sm">Usuário ou senha incorretos.</div>{% endif %}
       <input type="hidden" name="next" value="{{ next }}">
       <button class="btn btn-primary mt-2 w-full">Entrar</button>
     </div>

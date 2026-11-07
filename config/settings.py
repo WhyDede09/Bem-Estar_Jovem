@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apoio',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -131,5 +132,3 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # provas ficam fora de STATIC/MEDIA públicos: só a coordenação baixa, via view protegida
 PROVAS_DIR = BASE_DIR / "provas"
 LOGIN_URL = "login"
-LOGIN_REDIRECT_URL = "painel"
-LOGOUT_REDIRECT_URL = "login"
