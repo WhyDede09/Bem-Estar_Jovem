@@ -75,8 +75,8 @@ def painel(request):
     todas = Denuncia.objects.all()
     total = todas.count() or 1
 
-    def contagem(campo, choices):
-        nomes = dict(choices)
+    def contagem(campo):
+        nomes = dict(Denuncia._meta.get_field(campo).flatchoices)  # flatchoices aceita opções agrupadas
         linhas = [{"nome": nomes[r[campo]], "n": r["n"], "pct": round(100 * r["n"] / total)}
                   for r in todas.values(campo).annotate(n=Count("id")).order_by("-n")]
         return linhas
@@ -88,8 +88,8 @@ def painel(request):
         "status_choices": Denuncia.STATUS_CHOICES,
         "abertas": todas.exclude(status="encerrada").count(),
         "urgentes": sum(1 for d in todas.exclude(status="encerrada") if d.urgente),
-        "por_tipo": contagem("tipo", Denuncia.TIPO_CHOICES),
-        "por_plataforma": contagem("plataforma", Denuncia.PLATAFORMA_CHOICES),
+        "por_tipo": contagem("tipo"),
+        "por_plataforma": contagem("plataforma"),
     })
 
 

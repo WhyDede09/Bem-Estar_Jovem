@@ -14,13 +14,24 @@ class Denuncia(models.Model):
         ("exclusao", "Exclusão proposital de grupos"),
         ("outro", "Outro"),
     ]
+    # "Onde aconteceu": na escola (presencial) ou na internet
     PLATAFORMA_CHOICES = [
-        ("whatsapp", "WhatsApp"),
-        ("instagram", "Instagram"),
-        ("tiktok", "TikTok"),
-        ("discord", "Discord"),
-        ("jogo", "Jogo online"),
-        ("outra", "Outra"),
+        ("Na escola", [
+            ("sala", "Sala de aula"),
+            ("patio", "Pátio / intervalo"),
+            ("banheiro", "Banheiro"),
+            ("corredor", "Corredor"),
+            ("quadra", "Quadra / educação física"),
+            ("entrada", "Entrada ou saída da escola"),
+        ]),
+        ("Na internet", [
+            ("whatsapp", "WhatsApp"),
+            ("instagram", "Instagram"),
+            ("tiktok", "TikTok"),
+            ("discord", "Discord"),
+            ("jogo", "Jogo online"),
+        ]),
+        ("outra", "Outro lugar"),
     ]
     STATUS_CHOICES = [
         ("recebida", "Recebida"),
@@ -36,7 +47,7 @@ class Denuncia(models.Model):
     protocolo = models.CharField(max_length=13, unique=True, default=novo_protocolo, editable=False)
     quem = models.CharField(max_length=10, choices=QUEM_CHOICES, default="comigo")
     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
-    plataforma = models.CharField(max_length=20, choices=PLATAFORMA_CHOICES)
+    plataforma = models.CharField("Onde aconteceu", max_length=20, choices=PLATAFORMA_CHOICES)
     quando = models.CharField("Quando aconteceu", max_length=60, blank=True,
                               help_text="Ex.: ontem à noite, semana passada, ainda está acontecendo")
     descricao = models.TextField("O que aconteceu", max_length=3000)
@@ -58,8 +69,9 @@ class Denuncia(models.Model):
     ICONES_TIPO = {"ofensa": "bi-chat-left-text", "exposicao": "bi-image", "ameaca": "bi-exclamation-octagon",
                    "discriminacao": "bi-slash-circle", "perfil_falso": "bi-person-bounding-box",
                    "exclusao": "bi-people", "outro": "bi-three-dots"}
-    ICONES_PLATAFORMA = {"whatsapp": "bi-whatsapp", "instagram": "bi-instagram", "tiktok": "bi-tiktok",
-                         "discord": "bi-discord", "jogo": "bi-controller", "outra": "bi-globe"}
+    ICONES_PLATAFORMA = {"sala": "bi-easel", "patio": "bi-tree", "banheiro": "bi-door-closed", "corredor": "bi-signpost",
+                         "quadra": "bi-dribbble", "entrada": "bi-building", "whatsapp": "bi-whatsapp", "instagram": "bi-instagram", "tiktok": "bi-tiktok",
+                         "discord": "bi-discord", "jogo": "bi-controller", "outra": "bi-geo-alt"}
 
     @property
     def icone_tipo(self) -> str:
@@ -67,7 +79,7 @@ class Denuncia(models.Model):
 
     @property
     def icone_plataforma(self) -> str:
-        return self.ICONES_PLATAFORMA.get(self.plataforma, "bi-globe")
+        return self.ICONES_PLATAFORMA.get(self.plataforma, "bi-geo-alt")
 
     @property
     def etapa(self) -> int:
