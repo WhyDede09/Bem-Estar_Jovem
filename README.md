@@ -5,6 +5,18 @@ e como avisar a escola **sem se identificar**. Django + JS + Bootstrap.
 
 ## Rodar
 
+Crie e ative o ambiente virtual, depois instale as dependências:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+No Prompt de Comando, ative com `.\.venv\Scripts\activate.bat`.
+
+Com o ambiente ativo, execute:
+
 ```bash
 python manage.py migrate
 python manage.py demo        # coordenação + relatos FICTÍCIOS (apaga os atuais)
