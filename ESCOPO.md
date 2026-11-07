@@ -99,8 +99,9 @@ Oferecer um canal **seguro, anônimo e orientador**, que:
 | Framework web | Django | 6.1.3 | Rotas, views, ORM, formulários, autenticação, CSRF, admin |
 | Banco de dados | SQLite | embutido no Python | Persistência dos relatos (trocável por PostgreSQL em produção) |
 | Front-end | HTML + Django Templates | — | Páginas renderizadas no servidor |
-| Estilo | Bootstrap | 5.3.3 (CDN jsDelivr) | Layout responsivo, cards, formulários, badges |
-| Ícones | Bootstrap Icons | 1.11.3 (CDN jsDelivr) | Ícones da interface |
+| Estilo | Tailwind CSS | 4.1.4 (CDN `@tailwindcss/browser`) | Utilitários de layout, espaçamento, responsividade |
+| Componentes | daisyUI | 5.0.0 (CDN jsDelivr) | Cards, botões, formulários, steps, stats, tabs, alertas; tema próprio "escudo" com a paleta |
+| Ícones | Bootstrap Icons (só a fonte de ícones) | 1.11.3 (CDN jsDelivr) | Ícones da interface |
 | Interatividade | JavaScript (vanilla) | ES2020+ | Guia em etapas, instruções por plataforma, copiar frases e protocolo, "Sair rápido", mostrar e ocultar a identificação |
 | Versionamento | Git + GitHub | — | `WhyDede09/Bem-Estar_Jovem` |
 
@@ -108,7 +109,19 @@ Oferecer um canal **seguro, anônimo e orientador**, que:
 `staff_member_required`, `FileSystemStorage` privado, `FileResponse`, sessões, proteção CSRF e um
 management command (`demo`).
 
-## 7. Arquitetura
+## 7. Dois links
+
+| Link | Para quem | Layout |
+|---|---|---|
+| `/` | Alunos (denúncia e orientação) | `aluno.html`, sem nenhum link para a coordenação |
+| `/coordenacao/` | Coordenação (login) | `coord.html`, com painel e saída para o login |
+
+Os dois rodam no mesmo servidor Django; o aluno não vê nem é direcionado à área da coordenação.
+
+**Paleta:** marinho `#0a2fb8` / `#071f80`, ciano `#00b8e6` (fundo `#e3f8ff`), laranja `#ff8a00` (detalhe).
+Definida uma vez em `base.html` (`--esc-*`) e usada tanto pelo tema daisyUI quanto pelo Tailwind.
+
+## 8. Arquitetura
 
 ```
 Navegador (Bootstrap + JS)
@@ -163,7 +176,7 @@ Django (config/)
 | `/coordenacao/<id>/prova/` | coordenação | Download da prova |
 | `/admin/` | coordenação | Admin do Django |
 
-## 8. Como rodar
+## 9. Como rodar
 
 ```bash
 python manage.py migrate
@@ -174,9 +187,10 @@ python manage.py runserver
 - Aluno: http://localhost:8000
 - Coordenação: http://localhost:8000/coordenacao/ (`coordenacao` / `coord1234`, só para demo local)
 
-## 9. Antes de ir para produção
+## 10. Antes de ir para produção
 
 - `SECRET_KEY` e `DEBUG` em variáveis de ambiente, com `DEBUG = False` e `ALLOWED_HOSTS` configurado.
+- Gerar o CSS do Tailwind/daisyUI no build (CLI) em vez do CDN `@tailwindcss/browser`, que é só para desenvolvimento.
 - PostgreSQL no lugar do SQLite e armazenamento privado para as provas (por exemplo, um bucket sem acesso público).
 - HTTPS obrigatório.
 - Política de retenção: apagar relatos encerrados e provas após um período definido com a escola.

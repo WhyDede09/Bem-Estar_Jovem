@@ -1,36 +1,31 @@
-{% extends "apoio/base.html" %}
+{% extends "apoio/aluno.html" %}
 {% block titulo %}Acompanhar relato{% endblock %}
 {% block corpo %}
-<div class="mx-auto" style="max-width: 600px">
-  <h1 class="h3 fw-bold">Acompanhar relato</h1>
-  <form method="post" class="d-flex gap-2 my-3">
+<div class="mx-auto max-w-xl">
+  <h1 class="text-3xl font-bold text-neutral">Acompanhar relato</h1>
+  <form method="post" class="join my-4 w-full">
     {% csrf_token %}
-    <input name="protocolo" class="form-control form-control-lg font-monospace text-uppercase" placeholder="ESC-XXXX-XXXX"
+    <input name="protocolo" class="input input-lg join-item w-full font-mono uppercase" placeholder="ESC-XXXX-XXXX"
            value="{{ codigo }}" required autocomplete="off" aria-label="Protocolo">
-    <button class="btn btn-primary btn-lg">Ver</button>
+    <button class="btn btn-primary btn-lg join-item">Ver</button>
   </form>
 
-  {% if erro %}<div class="alert alert-warning">Não encontramos esse protocolo. Confira as letras e os números.</div>{% endif %}
+  {% if erro %}<div role="alert" class="alert alert-warning">Não encontramos esse protocolo. Confira as letras e os números.</div>{% endif %}
 
   {% if d %}
-  {% with s=d.status %}
-  <div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-secondary small">Enviado em {{ d.criada|date:"d/m/Y" }}</span>
-        <span class="badge fs-6 {% if s == 'encerrada' %}text-bg-secondary{% elif s == 'recebida' %}text-bg-info{% else %}text-bg-primary{% endif %}">{{ d.get_status_display }}</span>
-      </div>
-      <ol class="list-unstyled d-flex justify-content-between small text-center mb-4">
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <p class="text-sm text-base-content/60">Enviado em {{ d.criada|date:"d/m/Y" }}</p>
+      <ul class="steps steps-vertical sm:steps-horizontal my-2 w-full">
         {% for valor, nome in d.Status.choices %}
-          <li class="flex-fill {% if valor == s %}fw-bold text-primary{% else %}text-secondary{% endif %}">{{ nome }}</li>
+          <li class="step {% if forloop.counter <= d.etapa %}step-primary{% endif %}">{{ nome }}</li>
         {% endfor %}
-      </ol>
-      <h2 class="h6">Mensagem da coordenação</h2>
-      {% if d.resposta %}<p class="bg-light rounded p-3 mb-0" style="white-space: pre-line">{{ d.resposta }}</p>
-      {% else %}<p class="text-secondary mb-0">Ainda sem mensagem. A coordenação já recebeu seu relato.</p>{% endif %}
+      </ul>
+      <h2 class="font-semibold">Mensagem da coordenação</h2>
+      {% if d.resposta %}<p class="whitespace-pre-line rounded-box bg-base-200 p-4">{{ d.resposta }}</p>
+      {% else %}<p class="text-base-content/60">Ainda sem mensagem. A coordenação já recebeu seu relato.</p>{% endif %}
     </div>
   </div>
-  {% endwith %}
   {% endif %}
 </div>
 {% endblock %}

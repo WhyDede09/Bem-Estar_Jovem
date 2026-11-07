@@ -1,0 +1,18 @@
+{% extends "apoio/base.html" %}
+{% comment %}Layout do link da COORDENAÇÃO (/coordenacao/).{% endcomment %}
+{% block pagina %}
+<div class="flex min-h-screen flex-col">
+  <header class="navbar bg-neutral text-neutral-content shadow">
+    <div class="mx-auto flex w-full max-w-6xl items-center px-2">
+      <a href="{% url 'painel' %}" class="btn btn-ghost text-lg font-bold">
+        <i class="bi bi-shield-fill-check text-accent"></i> Escudo <span class="badge badge-secondary badge-sm">Coordenação</span></a>
+      <div class="flex-1"></div>
+      {% if user.is_staff %}
+      <span class="hidden px-2 text-sm opacity-80 sm:inline">{{ user.get_full_name|default:user.username }}</span>
+      <form method="post" action="{% url 'sair' %}">{% csrf_token %}<button class="btn btn-ghost btn-sm"><i class="bi bi-box-arrow-right"></i> Sair</button></form>
+      {% endif %}
+    </div>
+  </header>
+  <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{% block corpo %}{% endblock %}</main>
+</div>
+{% endblock %}

@@ -1,15 +1,19 @@
-{% extends "apoio/base.html" %}
+{% extends "apoio/aluno.html" %}
 {% block titulo %}O que fazer agora{% endblock %}
 {% block corpo %}
-<div class="mx-auto" style="max-width: 720px">
-  <div class="d-flex justify-content-between small text-secondary mb-1"><span>O que fazer agora</span><span id="contador">Passo 1 de 4</span></div>
-  <div class="progress mb-4" style="height: 6px"><div class="progress-bar" id="barra" style="width: 25%"></div></div>
+<div class="mx-auto max-w-3xl">
+  <ul class="steps steps-horizontal mb-6 w-full text-xs sm:text-sm" id="etapas">
+    <li class="step step-primary">Respire</li>
+    <li class="step">Provas</li>
+    <li class="step">Bloquear</li>
+    <li class="step">Falar</li>
+  </ul>
 
-  <section class="passo card border-0 shadow-sm" data-passo="1">
-    <div class="card-body p-4">
-      <h1 class="h4"><i class="bi bi-wind text-primary"></i> Primeiro: respira.</h1>
+  <section class="passo card bg-base-100 shadow-sm" data-passo="1">
+    <div class="card-body">
+      <h1 class="card-title text-2xl text-neutral"><i class="bi bi-wind text-secondary"></i> Primeiro: respira.</h1>
       <p>O que estão fazendo com você <strong>não é culpa sua</strong>, mesmo que digam que é "só brincadeira".</p>
-      <ul>
+      <ul class="list-disc space-y-2 pl-5">
         <li><strong>Não responda no calor do momento.</strong> Responder costuma aumentar o ataque e pode ser usado contra você.</li>
         <li>Se puder, <strong>silencie as notificações</strong> do grupo ou app por agora.</li>
         <li>Se você ou alguém corre <strong>perigo imediato</strong>, ligue <strong>190</strong>. Se precisar conversar com alguém agora, o <strong>CVV atende no 188</strong>, 24h, de graça e sem julgamento.</li>
@@ -17,52 +21,54 @@
     </div>
   </section>
 
-  <section class="passo card border-0 shadow-sm d-none" data-passo="2">
-    <div class="card-body p-4">
-      <h1 class="h4"><i class="bi bi-camera text-primary"></i> Guarde as provas</h1>
+  <section class="passo card hidden bg-base-100 shadow-sm" data-passo="2">
+    <div class="card-body">
+      <h1 class="card-title text-2xl text-neutral"><i class="bi bi-camera text-secondary"></i> Guarde as provas</h1>
       <p>Antes de bloquear ou de alguém apagar, salve o que aconteceu. Isso ajuda a escola e, se for preciso, a polícia.</p>
-      <div class="list-group mb-3">
-        <label class="list-group-item"><input class="form-check-input me-2" type="checkbox"> Print da mensagem/post <strong>com data e hora</strong> aparecendo</label>
-        <label class="list-group-item"><input class="form-check-input me-2" type="checkbox"> Print do <strong>perfil</strong> de quem enviou (nome de usuário visível)</label>
-        <label class="list-group-item"><input class="form-check-input me-2" type="checkbox"> <strong>Link</strong> do post ou perfil copiado</label>
-        <label class="list-group-item"><input class="form-check-input me-2" type="checkbox"> Nome do <strong>grupo</strong> e de quem estava nele, se for grupo</label>
+      <div class="space-y-2">
+        <label class="flex cursor-pointer items-center gap-3 rounded-box border border-base-300 p-3"><input type="checkbox" class="checkbox checkbox-primary"> <span>Print da mensagem/post <strong>com data e hora</strong> aparecendo</span></label>
+        <label class="flex cursor-pointer items-center gap-3 rounded-box border border-base-300 p-3"><input type="checkbox" class="checkbox checkbox-primary"> <span>Print do <strong>perfil</strong> de quem enviou (nome de usuário visível)</span></label>
+        <label class="flex cursor-pointer items-center gap-3 rounded-box border border-base-300 p-3"><input type="checkbox" class="checkbox checkbox-primary"> <span><strong>Link</strong> do post ou perfil copiado</span></label>
+        <label class="flex cursor-pointer items-center gap-3 rounded-box border border-base-300 p-3"><input type="checkbox" class="checkbox checkbox-primary"> <span>Nome do <strong>grupo</strong> e de quem estava nele, se for grupo</span></label>
       </div>
-      <div class="alert alert-warning small mb-0"><i class="bi bi-exclamation-triangle"></i>
-        Se for uma foto íntima sua: <strong>não reenvie para ninguém</strong>, nem para "provar". Guarde só o print do perfil/conversa e procure a escola ou a SaferNet.</div>
+      <div role="alert" class="alert alert-warning alert-soft mt-2 text-sm">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>Se for uma foto íntima sua: <strong>não reenvie para ninguém</strong>, nem para "provar". Guarde só o print do perfil/conversa e procure a escola ou a SaferNet.</span>
+      </div>
     </div>
   </section>
 
-  <section class="passo card border-0 shadow-sm d-none" data-passo="3">
-    <div class="card-body p-4">
-      <h1 class="h4"><i class="bi bi-slash-circle text-primary"></i> Bloqueie e denuncie na plataforma</h1>
+  <section class="passo card hidden bg-base-100 shadow-sm" data-passo="3">
+    <div class="card-body">
+      <h1 class="card-title text-2xl text-neutral"><i class="bi bi-slash-circle text-secondary"></i> Bloqueie e denuncie na plataforma</h1>
       <p>Onde aconteceu?</p>
-      <div class="btn-group flex-wrap mb-3" role="group" id="plataformas">
-        <button type="button" class="btn btn-outline-primary active" data-plat="whatsapp">WhatsApp</button>
-        <button type="button" class="btn btn-outline-primary" data-plat="instagram">Instagram</button>
-        <button type="button" class="btn btn-outline-primary" data-plat="tiktok">TikTok</button>
-        <button type="button" class="btn btn-outline-primary" data-plat="discord">Discord</button>
-        <button type="button" class="btn btn-outline-primary" data-plat="jogo">Jogo online</button>
+      <div class="flex flex-wrap gap-2" id="plataformas">
+        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="whatsapp">WhatsApp</button>
+        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="instagram">Instagram</button>
+        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="tiktok">TikTok</button>
+        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="discord">Discord</button>
+        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="jogo">Jogo online</button>
       </div>
-      <div class="bg-light rounded p-3" id="instrucao"></div>
-      <p class="small text-secondary mt-3 mb-0">A denúncia na plataforma é anônima: a pessoa não fica sabendo quem denunciou.</p>
+      <div class="rounded-box bg-base-200 p-4" id="instrucao"></div>
+      <p class="text-sm text-base-content/60">A denúncia na plataforma é anônima: a pessoa não fica sabendo quem denunciou.</p>
     </div>
   </section>
 
-  <section class="passo card border-0 shadow-sm d-none" data-passo="4">
-    <div class="card-body p-4">
-      <h1 class="h4"><i class="bi bi-chat-heart text-primary"></i> Fale com alguém</h1>
+  <section class="passo card hidden bg-base-100 shadow-sm" data-passo="4">
+    <div class="card-body">
+      <h1 class="card-title text-2xl text-neutral"><i class="bi bi-chat-heart text-secondary"></i> Fale com alguém</h1>
       <p>Você não precisa resolver isso sozinho(a). Escolha o que for mais confortável:</p>
-      <div class="row g-2">
-        <div class="col-sm-6"><a class="btn btn-primary w-100 py-3" href="{% url 'denunciar' %}?quem=comigo"><i class="bi bi-envelope-paper"></i><br>Avisar a escola<br><small>anônimo se quiser</small></a></div>
-        <div class="col-sm-6"><div class="border rounded p-3 h-100"><strong>Alguém de confiança</strong><br><small class="text-secondary">Um amigo, alguém da família, um professor de quem você gosta.</small></div></div>
-        <div class="col-sm-6"><div class="border rounded p-3 h-100"><strong>CVV: 188</strong><br><small class="text-secondary">Conversa sigilosa, 24h, também por chat em cvv.org.br.</small></div></div>
-        <div class="col-sm-6"><div class="border rounded p-3 h-100"><strong>SaferNet</strong><br><small class="text-secondary">Orientação e denúncia de crimes na internet (exposição, ódio, ameaça).</small></div></div>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a class="btn btn-primary h-auto flex-col py-4" href="{% url 'denunciar' %}?quem=comigo"><i class="bi bi-envelope-paper text-xl"></i>Avisar a escola<span class="text-xs font-normal opacity-80">anônimo se quiser</span></a>
+        <div class="rounded-box border border-base-300 p-4"><strong>Alguém de confiança</strong><p class="text-sm text-base-content/60">Um amigo, alguém da família, um professor de quem você gosta.</p></div>
+        <div class="rounded-box border border-base-300 p-4"><strong>CVV: 188</strong><p class="text-sm text-base-content/60">Conversa sigilosa, 24h, também por chat em cvv.org.br.</p></div>
+        <div class="rounded-box border border-base-300 p-4"><strong>SaferNet</strong><p class="text-sm text-base-content/60">Orientação e denúncia de crimes na internet (exposição, ódio, ameaça).</p></div>
       </div>
     </div>
   </section>
 
-  <div class="d-flex justify-content-between mt-3">
-    <button class="btn btn-outline-secondary" id="voltar" disabled><i class="bi bi-arrow-left"></i> Voltar</button>
+  <div class="mt-4 flex justify-between">
+    <button class="btn btn-ghost" id="voltar"><i class="bi bi-house"></i> Início</button>
     <button class="btn btn-primary" id="avancar">Próximo <i class="bi bi-arrow-right"></i></button>
   </div>
 </div>
@@ -79,22 +85,29 @@
   };
   const instr = document.getElementById("instrucao");
   const botoes = document.querySelectorAll("#plataformas button");
-  const mostrar = (p) => { instr.innerHTML = INSTRUCOES[p]; botoes.forEach(b => b.classList.toggle("active", b.dataset.plat === p)); };
+  const mostrar = (p) => {
+    instr.innerHTML = INSTRUCOES[p];
+    botoes.forEach(b => b.classList.toggle("btn-outline", b.dataset.plat !== p));
+  };
   botoes.forEach(b => b.addEventListener("click", () => mostrar(b.dataset.plat)));
   mostrar("whatsapp");
 
   const passos = document.querySelectorAll(".passo");
+  const etapas = document.querySelectorAll("#etapas .step");
+  const voltar = document.getElementById("voltar");
+  const avancar = document.getElementById("avancar");
   let atual = 0;
   const ir = (i) => {
     atual = i;
-    passos.forEach((p, k) => p.classList.toggle("d-none", k !== i));
-    document.getElementById("barra").style.width = `${(i + 1) * 100 / passos.length}%`;
-    document.getElementById("contador").textContent = `Passo ${i + 1} de ${passos.length}`;
-    document.getElementById("voltar").disabled = i === 0;
-    document.getElementById("avancar").classList.toggle("invisible", i === passos.length - 1);
+    passos.forEach((p, k) => p.classList.toggle("hidden", k !== i));
+    etapas.forEach((e, k) => e.classList.toggle("step-primary", k <= i));
+    voltar.innerHTML = i === 0 ? '<i class="bi bi-house"></i> Início' : '<i class="bi bi-arrow-left"></i> Voltar';
+    avancar.classList.toggle("invisible", i === passos.length - 1);
     window.scrollTo({ top: 0 });
   };
-  document.getElementById("avancar").addEventListener("click", () => ir(Math.min(atual + 1, passos.length - 1)));
-  document.getElementById("voltar").addEventListener("click", () => ir(Math.max(atual - 1, 0)));
+  avancar.addEventListener("click", () => ir(Math.min(atual + 1, passos.length - 1)));
+  // passo 1: volta para o início em vez de ficar desativado
+  voltar.addEventListener("click", () => atual === 0 ? location.assign("{% url 'inicio' %}") : ir(atual - 1));
+  ir(0);
 </script>
 {% endblock %}

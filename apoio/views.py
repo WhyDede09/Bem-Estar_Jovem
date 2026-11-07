@@ -21,8 +21,16 @@ def guia(request):
     return render(request, "apoio/guia.html")
 
 
+FRASES_COLEGA = [
+    {"texto": "Vi o que mandaram no grupo. Isso foi zoado e não tem nada a ver com você. Tô aqui se quiser conversar."},
+    {"texto": "Quer que eu vá com você falar com alguém da escola? Ou prefere que eu avise sem falar seu nome?"},
+    {"texto": "Denunciei o post. Se aparecer mais coisa, me fala que eu ajudo a guardar os prints."},
+    {"texto": "Gente, isso passou do limite. Bora parar de compartilhar.", "grupo": True},
+]
+
+
 def colega(request):
-    return render(request, "apoio/colega.html")
+    return render(request, "apoio/colega.html", {"frases": FRASES_COLEGA})
 
 
 def denunciar(request):

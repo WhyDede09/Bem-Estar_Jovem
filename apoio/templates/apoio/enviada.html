@@ -1,29 +1,32 @@
-{% extends "apoio/base.html" %}
+{% extends "apoio/aluno.html" %}
 {% block titulo %}Relato enviado{% endblock %}
 {% block corpo %}
-<div class="mx-auto text-center" style="max-width: 600px">
-  <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem"></i>
-  <h1 class="h3 fw-bold mt-2">Relato enviado. Obrigado por confiar.</h1>
-  <p class="text-secondary">Guarde este protocolo para ver a resposta da coordenação. <strong>Ele só aparece agora.</strong></p>
+<div class="mx-auto max-w-xl text-center">
+  <i class="bi bi-check-circle-fill text-6xl text-success"></i>
+  <h1 class="mt-3 text-3xl font-bold text-neutral">Relato enviado. Obrigado por confiar.</h1>
+  <p class="mt-2 text-base-content/70">Guarde este protocolo para ver a resposta da coordenação. <strong>Ele só aparece agora.</strong></p>
 
-  <div class="card border-0 shadow-sm my-4">
-    <div class="card-body d-flex justify-content-center align-items-center gap-3">
-      <span class="fs-2 fw-bold font-monospace" id="protocolo">{{ d.protocolo }}</span>
-      <button class="btn btn-outline-primary" data-copiar-de="#protocolo"><i class="bi bi-clipboard"></i> Copiar</button>
+  <div class="card my-6 bg-base-100 shadow-sm">
+    <div class="card-body flex-row items-center justify-center gap-4">
+      <span class="font-mono text-3xl font-bold tracking-wider text-primary" id="protocolo">{{ d.protocolo }}</span>
+      <button class="btn btn-outline btn-primary btn-sm" data-copiar-de="#protocolo"><i class="bi bi-clipboard"></i> Copiar</button>
     </div>
   </div>
 
   {% if d.urgente %}
-  <div class="alert alert-danger text-start">
-    <h2 class="h6 fw-bold"><i class="bi bi-exclamation-octagon"></i> Você marcou que há risco.</h2>
-    A coordenação vê este relato <strong>no topo da lista</strong>. Mas não espere: se o perigo for agora, ligue <strong>190</strong>.
-    Se você está pensando em se machucar ou precisa conversar, o <strong>CVV atende no 188</strong>, a qualquer hora.
+  <div role="alert" class="alert alert-error mb-6 text-left">
+    <i class="bi bi-exclamation-octagon text-2xl"></i>
+    <div>
+      <h2 class="font-bold">Você marcou que há risco.</h2>
+      A coordenação vê este relato <strong>no topo da lista</strong>. Mas não espere: se o perigo for agora, ligue <strong>190</strong>.
+      Se você está pensando em se machucar ou precisa conversar, o <strong>CVV atende no 188</strong>, a qualquer hora.
+    </div>
   </div>
   {% endif %}
 
-  <div class="d-flex gap-2 justify-content-center">
+  <div class="flex justify-center gap-2">
     <a class="btn btn-primary" href="{% url 'acompanhar' %}">Acompanhar relato</a>
-    <a class="btn btn-outline-secondary" href="{% url 'inicio' %}">Voltar ao início</a>
+    <a class="btn btn-ghost" href="{% url 'inicio' %}">Voltar ao início</a>
   </div>
 </div>
 {% endblock %}

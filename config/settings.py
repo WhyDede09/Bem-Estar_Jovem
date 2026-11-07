@@ -132,4 +132,4 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 PROVAS_DIR = BASE_DIR / "provas"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "painel"
-LOGOUT_REDIRECT_URL = "inicio"
+LOGOUT_REDIRECT_URL = "login"

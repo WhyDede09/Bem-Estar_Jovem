@@ -1,22 +1,22 @@
-{% extends "apoio/base.html" %}
+{% extends "apoio/coord.html" %}
 {% block titulo %}Coordenação{% endblock %}
 {% block corpo %}
-<div class="mx-auto" style="max-width: 380px">
-  <form method="post" class="card border-0 shadow-sm">
+<div class="mx-auto mt-10 max-w-sm">
+  <form method="post" class="card bg-base-100 shadow-sm">
     {% csrf_token %}
-    <div class="card-body p-4">
-      <h1 class="h5 fw-bold mb-3"><i class="bi bi-person-badge"></i> Acesso da coordenação</h1>
-      <div class="mb-3">
-        <label class="form-label" for="id_username">Usuário</label>
-        <input class="form-control" id="id_username" name="username" autocomplete="username" required autofocus>
-      </div>
-      <div class="mb-3">
-        <label class="form-label" for="id_password">Senha</label>
-        <input class="form-control" id="id_password" name="password" type="password" autocomplete="current-password" required>
-      </div>
-      {% if form.errors %}<div class="alert alert-danger py-2 small">Usuário ou senha incorretos.</div>{% endif %}
+    <div class="card-body">
+      <h1 class="card-title text-neutral"><i class="bi bi-person-badge"></i> Acesso da coordenação</h1>
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Usuário</legend>
+        <input class="input w-full" aria-label="Usuário" id="id_username" name="username" autocomplete="username" required autofocus>
+      </fieldset>
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Senha</legend>
+        <input class="input w-full" aria-label="Senha" id="id_password" name="password" type="password" autocomplete="current-password" required>
+      </fieldset>
+      {% if form.errors %}<div role="alert" class="alert alert-error alert-soft py-2 text-sm">Usuário ou senha incorretos.</div>{% endif %}
       <input type="hidden" name="next" value="{{ next }}">
-      <button class="btn btn-primary w-100">Entrar</button>
+      <button class="btn btn-primary mt-2 w-full">Entrar</button>
     </div>
   </form>
 </div>
