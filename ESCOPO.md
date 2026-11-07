@@ -1,4 +1,4 @@
-# Escudo: escopo do projeto
+# Sistema de Denúncia · Colégio Esperança: escopo do projeto
 
 > Hackathon: **Bem-Estar e Saúde Mental do Jovem** (apoio emocional, combate ao cyberbullying e rotinas saudáveis)
 
