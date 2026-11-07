@@ -41,6 +41,21 @@ class EntrarSairTests(TestCase):
 
 
 class AdminUsuarioTests(TestCase):
+    def test_admin_tem_link_para_login_da_coordenacao(self):
+        User = get_user_model()
+        administrador = User.objects.create_superuser(
+            username="admin",
+            email="admin@example.com",
+            password="senha-forte-123",
+        )
+        self.client.force_login(administrador)
+
+        resposta = self.client.get("/admin/")
+
+        self.assertEqual(resposta.status_code, 200)
+        self.assertContains(resposta, 'href="/coordenacao/entrar/"')
+        self.assertContains(resposta, "Voltar para coordenação")
+
     def test_formulario_criar_usuario_inclui_opcao_staff(self):
         User = get_user_model()
         administrador = User.objects.create_superuser(

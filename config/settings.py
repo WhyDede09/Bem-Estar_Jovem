@@ -47,6 +47,12 @@ JAZZMIN_SETTINGS = {
     'site_header': 'Bem-Estar Jovem',
     'site_brand': 'Bem-Estar Jovem',
     'welcome_sign': 'Bem-vindo à administração',
+    'topmenu_links': [
+        {
+            'name': 'Voltar para coordenação',
+            'url': '/coordenacao/entrar/',
+        },
+    ],
 }
 
 MIDDLEWARE = [
