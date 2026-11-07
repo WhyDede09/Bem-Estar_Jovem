@@ -1,19 +1,7 @@
-import secrets
-
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
 from django.db import models
 
-
-def _provas_storage():
-    return FileSystemStorage(location=settings.PROVAS_DIR, base_url=None)
-
-_ALFABETO = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
-
-
-def novo_protocolo() -> str:
-    parte = lambda: "".join(secrets.choice(_ALFABETO) for _ in range(4))
-    return f"ESC-{parte()}-{parte()}"
+from .protocolos import novo_protocolo
+from .storage import provas_storage
 
 
 class Denuncia(models.Model):
@@ -52,7 +40,7 @@ class Denuncia(models.Model):
     quando = models.CharField("Quando aconteceu", max_length=60, blank=True,
                               help_text="Ex.: ontem à noite, semana passada, ainda está acontecendo")
     descricao = models.TextField("O que aconteceu", max_length=3000)
-    prova = models.FileField("Print ou arquivo (opcional)", storage=_provas_storage, upload_to="%Y/%m", blank=True)
+    prova = models.FileField("Print ou arquivo (opcional)", storage=provas_storage, upload_to="%Y/%m", blank=True)
     anonima = models.BooleanField(default=True)
     nome = models.CharField(max_length=100, blank=True)
     contato = models.CharField("Turma ou contato", max_length=100, blank=True)
