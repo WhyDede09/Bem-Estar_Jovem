@@ -3,48 +3,55 @@
 {% block main_classes %}w-full flex-1{% endblock %}
 {% block corpo %}
 {# ---------- Destaque ---------- #}
-<section class="bg-gradient-to-br from-neutral via-primary to-primary px-4 pt-14 pb-28 text-primary-content sm:pt-20">
-  <div class="mx-auto max-w-3xl text-center">
-    <span class="badge border-0 bg-white/15 px-3 py-3 text-primary-content"><i class="bi bi-shield-lock"></i> Seguro, anônimo e sem login</span>
-    <h1 class="mt-5 text-4xl font-extrabold tracking-tight sm:text-6xl">Você <span class="text-accent">não</span> está sozinho(a).</h1>
-    <p class="mx-auto mt-5 max-w-2xl text-lg text-primary-content/85">Ofensas, exposição, ameaças ou exclusão na internet não são "brincadeira" e não são culpa de quem sofre.
-      Aqui você encontra o que fazer agora, e pode avisar a escola <strong class="text-primary-content">sem se identificar</strong>.</p>
-    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-      <a href="{% url 'guia' %}" class="btn btn-accent btn-lg"><i class="bi bi-heart-pulse"></i> Preciso de ajuda agora</a>
-      <a href="{% url 'denunciar' %}" class="btn btn-lg border-white/40 bg-white/10 text-primary-content hover:bg-white/20"><i class="bi bi-envelope-paper"></i> Avisar a escola</a>
+<section class="px-4 pt-12 pb-14 sm:pt-16">
+  <div class="mx-auto grid max-w-6xl items-end gap-8 lg:grid-cols-[1.3fr_1fr]">
+    <div>
+      <p class="rotulo">Seguro · anônimo · sem login</p>
+      <h1 class="mt-3 text-5xl leading-[0.9] sm:text-7xl">VOCÊ NÃO<br>ESTÁ<br><span class="text-primary">SOZINHO.</span></h1>
     </div>
-    <p class="mt-6 text-sm text-primary-content/80">
-      <i class="bi bi-telephone"></i> Quer conversar agora? <strong class="text-primary-content">CVV 188</strong> (24h, gratuito)
-      <span class="mx-2 opacity-50">|</span> Em perigo: <strong class="text-primary-content">190</strong>
-    </p>
+    <div>
+      <p class="text-lg">Ofensas, exposição, ameaças ou exclusão na internet não são "brincadeira" e não são culpa de quem sofre.
+        Aqui você encontra o que fazer agora, e pode avisar a escola <strong>sem se identificar</strong>.</p>
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+        <a href="{% url 'guia' %}" class="btn btn-accent btn-lg">Preciso de ajuda agora <i class="bi bi-arrow-right"></i></a>
+        <a href="{% url 'denunciar' %}" class="btn btn-lg bg-base-100">Avisar a escola</a>
+      </div>
+      <p class="mt-5 text-sm">
+        <i class="bi bi-telephone"></i> Quer conversar agora? <strong>CVV 188</strong> (24h, gratuito)
+        <span class="mx-2 opacity-40">|</span> Em perigo: <strong>190</strong>
+      </p>
+    </div>
   </div>
 </section>
 
 {# ---------- Caminhos ---------- #}
-<section class="mx-auto -mt-16 max-w-6xl px-4">
-  <div class="grid gap-4 md:grid-cols-3">
-    <a href="{% url 'guia' %}" class="group card bg-base-100 shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
+<section class="mx-auto max-w-6xl px-4">
+  <div class="grid gap-6 md:grid-cols-3">
+    <a href="{% url 'guia' %}" class="group card bg-base-100 transition hover:-translate-y-1">
       <div class="card-body">
-        <span class="grid size-12 place-items-center rounded-xl bg-accent/15 text-accent"><i class="bi bi-heart-pulse text-2xl"></i></span>
-        <h2 class="card-title mt-3">Está acontecendo comigo</h2>
-        <p class="text-base-content/70">Passo a passo: como guardar provas, bloquear, denunciar e com quem falar.</p>
-        <span class="mt-auto pt-3 font-semibold text-primary">Ver o passo a passo <i class="bi bi-arrow-right transition group-hover:translate-x-1"></i></span>
+        <p class="rotulo">Caminho 1</p>
+        <h2 class="text-2xl">Está acontecendo comigo</h2>
+        <hr class="my-2 border-t-2 border-base-300">
+        <p>Passo a passo: como guardar provas, bloquear, denunciar e com quem falar.</p>
+        <span class="mt-auto pt-3 font-bold text-primary">Ver o passo a passo <i class="bi bi-arrow-right transition group-hover:translate-x-1"></i></span>
       </div>
     </a>
-    <a href="{% url 'colega' %}" class="group card bg-base-100 shadow-lg transition hover:-translate-y-1 hover:shadow-xl">
+    <a href="{% url 'colega' %}" class="group card bg-base-100 transition hover:-translate-y-1">
       <div class="card-body">
-        <span class="grid size-12 place-items-center rounded-xl bg-secondary/15 text-secondary"><i class="bi bi-people text-2xl"></i></span>
-        <h2 class="card-title mt-3">Vi acontecer com alguém</h2>
-        <p class="text-base-content/70">Como ajudar um colega sem aumentar a exposição dele, com frases prontas.</p>
-        <span class="mt-auto pt-3 font-semibold text-primary">Saber como ajudar <i class="bi bi-arrow-right transition group-hover:translate-x-1"></i></span>
+        <p class="rotulo">Caminho 2</p>
+        <h2 class="text-2xl">Vi acontecer com alguém</h2>
+        <hr class="my-2 border-t-2 border-base-300">
+        <p>Como ajudar um colega sem aumentar a exposição dele, com frases prontas.</p>
+        <span class="mt-auto pt-3 font-bold text-primary">Saber como ajudar <i class="bi bi-arrow-right transition group-hover:translate-x-1"></i></span>
       </div>
     </a>
-    <a href="{% url 'denunciar' %}" class="group card bg-base-100 shadow-lg ring-2 ring-primary transition hover:-translate-y-1 hover:shadow-xl">
+    <a href="{% url 'denunciar' %}" class="group card bg-primary text-primary-content transition hover:-translate-y-1" style="box-shadow: 5px 5px 0 var(--esc-ink) !important">
       <div class="card-body">
-        <span class="grid size-12 place-items-center rounded-xl bg-primary text-primary-content"><i class="bi bi-envelope-paper text-2xl"></i></span>
-        <h2 class="card-title mt-3">Avisar a escola</h2>
-        <p class="text-base-content/70">Relato anônimo ou identificado. Você recebe um protocolo para acompanhar.</p>
-        <span class="mt-auto pt-3 font-semibold text-primary">Fazer um relato <i class="bi bi-arrow-right transition group-hover:translate-x-1"></i></span>
+        <p class="rotulo text-accent">Caminho 3</p>
+        <h2 class="text-2xl">Avisar a escola</h2>
+        <hr class="my-2 border-t-2 border-white/30">
+        <p>Relato anônimo ou identificado. Você recebe um protocolo para acompanhar.</p>
+        <span class="mt-auto pt-3 font-bold text-accent">Fazer um relato <i class="bi bi-arrow-right transition group-hover:translate-x-1"></i></span>
       </div>
     </a>
   </div>
@@ -52,51 +59,52 @@
 
 {# ---------- Como funciona ---------- #}
 <section class="mx-auto max-w-6xl px-4 py-16">
-  <h2 class="text-center text-3xl font-bold text-neutral">Como funciona o relato</h2>
-  <p class="mt-2 text-center text-base-content/70">Três passos, e você decide se quer se identificar.</p>
-  <ol class="mt-10 grid gap-6 md:grid-cols-3">
-    <li class="flex gap-4">
-      <span class="grid size-11 shrink-0 place-items-center rounded-full bg-primary text-lg font-bold text-primary-content">1</span>
-      <div><h3 class="text-lg font-semibold">Você conta o que aconteceu</h3>
-        <p class="text-base-content/70">O que, onde e quando. Pode anexar um print. Leva uns 2 minutos.</p></div>
+  <p class="rotulo">Como funciona</p>
+  <h2 class="mt-2 text-4xl">TRÊS PASSOS.</h2>
+  <ol class="mt-8 grid gap-6 md:grid-cols-3">
+    <li class="border-t-2 border-ink pt-4">
+      <span class="titulo text-5xl text-primary">01</span>
+      <h3 class="mt-2 text-lg font-bold">Você conta o que aconteceu</h3>
+      <p>O que, onde e quando. Pode anexar um print. Leva uns 2 minutos.</p>
     </li>
-    <li class="flex gap-4">
-      <span class="grid size-11 shrink-0 place-items-center rounded-full bg-primary text-lg font-bold text-primary-content">2</span>
-      <div><h3 class="text-lg font-semibold">Recebe um protocolo</h3>
-        <p class="text-base-content/70">Um código como <code class="rounded bg-base-100 px-1">ESC-7K2P-9QXM</code>. Só você tem ele.</p></div>
+    <li class="border-t-2 border-ink pt-4">
+      <span class="titulo text-5xl text-primary">02</span>
+      <h3 class="mt-2 text-lg font-bold">Recebe um protocolo</h3>
+      <p>Um código como <code class="border border-ink bg-base-100 px-1">ESC-7K2P-9QXM</code>. Só você tem ele.</p>
     </li>
-    <li class="flex gap-4">
-      <span class="grid size-11 shrink-0 place-items-center rounded-full bg-primary text-lg font-bold text-primary-content">3</span>
-      <div><h3 class="text-lg font-semibold">A escola responde</h3>
-        <p class="text-base-content/70">Em <a class="link link-primary" href="{% url 'acompanhar' %}">Acompanhar relato</a> você vê o andamento e a mensagem da coordenação.</p></div>
+    <li class="border-t-2 border-ink pt-4">
+      <span class="titulo text-5xl text-primary">03</span>
+      <h3 class="mt-2 text-lg font-bold">A escola responde</h3>
+      <p>Em <a class="link font-bold text-primary" href="{% url 'acompanhar' %}">Acompanhar relato</a> você vê o andamento e a mensagem da coordenação.</p>
     </li>
   </ol>
 </section>
 
 {# ---------- Privacidade ---------- #}
-<section class="bg-base-100 px-4 py-14">
+<section class="border-t-2 border-ink bg-base-100 px-4 py-14">
   <div class="mx-auto max-w-6xl">
-    <h2 class="text-center text-3xl font-bold text-neutral"><i class="bi bi-lock text-secondary"></i> Sua privacidade vem primeiro</h2>
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      <div class="rounded-box border border-base-300 p-5">
-        <i class="bi bi-person-x text-3xl text-secondary"></i>
-        <h3 class="mt-3 font-semibold">Sem login</h3>
-        <p class="text-sm text-base-content/70">Ninguém precisa criar conta nem dizer quem é para pedir ajuda.</p>
+    <p class="rotulo">Privacidade</p>
+    <h2 class="mt-2 text-4xl">SUA PRIVACIDADE VEM PRIMEIRO.</h2>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="borda bg-base-200 p-5">
+        <i class="bi bi-person-x text-3xl text-primary"></i>
+        <h3 class="mt-3 font-bold">Sem login</h3>
+        <p class="text-sm">Ninguém precisa criar conta nem dizer quem é para pedir ajuda.</p>
       </div>
-      <div class="rounded-box border border-base-300 p-5">
-        <i class="bi bi-incognito text-3xl text-secondary"></i>
-        <h3 class="mt-3 font-semibold">Anônimo de verdade</h3>
-        <p class="text-sm text-base-content/70">No relato anônimo, nome e contato não são guardados, nem se você digitar.</p>
+      <div class="borda bg-base-200 p-5">
+        <i class="bi bi-incognito text-3xl text-primary"></i>
+        <h3 class="mt-3 font-bold">Anônimo de verdade</h3>
+        <p class="text-sm">No relato anônimo, nome e contato não são guardados, nem se você digitar.</p>
       </div>
-      <div class="rounded-box border border-base-300 p-5">
-        <i class="bi bi-eye-slash text-3xl text-secondary"></i>
-        <h3 class="mt-3 font-semibold">Só a coordenação vê</h3>
-        <p class="text-sm text-base-content/70">E ela vê <em>o que aconteceu</em>, não um perfil seu.</p>
+      <div class="borda bg-base-200 p-5">
+        <i class="bi bi-eye-slash text-3xl text-primary"></i>
+        <h3 class="mt-3 font-bold">Só a coordenação vê</h3>
+        <p class="text-sm">E ela vê <em>o que aconteceu</em>, não um perfil seu.</p>
       </div>
-      <div class="rounded-box border border-base-300 p-5">
+      <div class="borda bg-base-200 p-5">
         <i class="bi bi-box-arrow-right text-3xl text-error"></i>
-        <h3 class="mt-3 font-semibold">Sair rápido</h3>
-        <p class="text-sm text-base-content/70">O botão vermelho (ou <kbd class="kbd kbd-xs">Esc</kbd> duas vezes) fecha a página na hora.</p>
+        <h3 class="mt-3 font-bold">Sair rápido</h3>
+        <p class="text-sm">O botão vermelho (ou <kbd class="kbd kbd-xs">Esc</kbd> duas vezes) fecha a página na hora.</p>
       </div>
     </div>
   </div>
