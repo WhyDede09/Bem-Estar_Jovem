@@ -57,6 +57,10 @@
   .input, .select, .textarea, .file-input { border: 2px solid var(--esc-ink); border-radius: 0; box-shadow: none; background-color: #fff; }
   .badge { border: 2px solid var(--esc-ink); border-radius: 0; font-weight: 700; }
   .alert { border: 2px solid var(--esc-ink); border-radius: 0; }
+  /* Avisos sempre legíveis: texto em tinta (o "soft" do daisyUI pintava o texto de amarelo) */
+  .alert-warning { background: var(--esc-accent) !important; color: var(--esc-ink) !important; }
+  .alert-soft.alert-error { background: #fde8e6 !important; color: var(--esc-ink) !important; border-color: var(--esc-error); }
+  .alert-soft.alert-error > i, .alert-soft.alert-error strong { color: var(--esc-error); }
   .rounded-box, .rounded-xl, .rounded-full, .rounded, .kbd, .progress, .menu :where(li > *) { border-radius: 0 !important; }
 </style>
 <style type="text/tailwindcss">
