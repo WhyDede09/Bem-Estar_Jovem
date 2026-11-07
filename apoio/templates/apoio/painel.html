@@ -24,7 +24,7 @@
     <div class="text-secondary small mb-2">Por plataforma</div>
     {% for p in por_plataforma|slice:":4" %}
       <div class="small d-flex justify-content-between"><span>{{ p.nome }}</span><span>{{ p.n }}</span></div>
-      <div class="progress mb-1" style="height: 4px"><div class="progress-bar bg-info" style="width: {{ p.pct }}%"></div></div>
+      <div class="progress mb-1" style="height: 4px"><div class="progress-bar" style="background: var(--laranja); width: {{ p.pct }}%"></div></div>
     {% endfor %}
   </div></div></div>
 </div>
