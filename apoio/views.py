@@ -77,6 +77,7 @@ def painel(request):
         return linhas
 
     return render(request, "apoio/painel.html", {
+        "secao": "painel",
         "denuncias": qs,
         "status_atual": status,
         "status_choices": Denuncia.Status.choices,
@@ -94,7 +95,7 @@ def detalhe(request, pk):
     if form.is_valid():
         form.save()
         return redirect("detalhe", pk=pk)
-    return render(request, "apoio/detalhe.html", {"d": d, "form": form})
+    return render(request, "apoio/detalhe.html", {"d": d, "form": form, "secao": "painel"})
 
 
 @staff

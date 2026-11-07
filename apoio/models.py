@@ -54,6 +54,21 @@ class Denuncia(models.Model):
     class Meta:
         ordering = ["-risco", "-criada"]
 
+    # Ícones (Bootstrap Icons) usados na lista da coordenação
+    ICONES_TIPO = {"ofensa": "bi-chat-left-text", "exposicao": "bi-image", "ameaca": "bi-exclamation-octagon",
+                   "discriminacao": "bi-slash-circle", "perfil_falso": "bi-person-bounding-box",
+                   "exclusao": "bi-people", "outro": "bi-three-dots"}
+    ICONES_PLATAFORMA = {"whatsapp": "bi-whatsapp", "instagram": "bi-instagram", "tiktok": "bi-tiktok",
+                         "discord": "bi-discord", "jogo": "bi-controller", "outra": "bi-globe"}
+
+    @property
+    def icone_tipo(self) -> str:
+        return self.ICONES_TIPO.get(self.tipo, "bi-three-dots")
+
+    @property
+    def icone_plataforma(self) -> str:
+        return self.ICONES_PLATAFORMA.get(self.plataforma, "bi-globe")
+
     @property
     def etapa(self) -> int:
         """Posição do status (1..4), para a linha do tempo."""
