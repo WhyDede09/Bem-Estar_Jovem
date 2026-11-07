@@ -9,7 +9,7 @@ class Denuncia(models.Model):
         ("ofensa", "Ofensas ou humilhação"),
         ("exposicao", "Exposição de foto, vídeo ou conversa"),
         ("ameaca", "Ameaça"),
-        ("discriminacao", "Discriminação (racismo, LGBTfobia, etc.)"),
+        ("discriminacao", "Discriminação"),
         ("perfil_falso", "Perfil falso se passando por alguém"),
         ("exclusao", "Exclusão proposital de grupos"),
         ("outro", "Outro"),
