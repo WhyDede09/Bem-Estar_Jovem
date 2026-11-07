@@ -35,3 +35,25 @@ class DenunciaTests(TestCase):
         self.assertTrue(com_risco.urgente)
         self.assertTrue(ameaca.urgente)
         self.assertFalse(sem_urgencia.urgente)
+
+
+class AdminTests(TestCase):
+    """Protege o admin de regressões (format_html sem argumentos / Denuncia.Status inexistente)."""
+
+    def setUp(self):
+        from django.contrib.auth import get_user_model
+        user = get_user_model().objects.create_superuser("coord", password="x")
+        self.client.force_login(user)
+        self.denuncia = Denuncia.objects.create(tipo="ameaca", plataforma="instagram", descricao="Teste", risco=True)
+
+    def test_lista_do_admin_abre_com_relato_urgente(self):
+        resposta = self.client.get("/admin/apoio/denuncia/")
+
+        self.assertEqual(resposta.status_code, 200)
+        self.assertContains(resposta, "RISCO AGORA")
+
+    def test_acao_marcar_em_analise_muda_o_status(self):
+        self.client.post("/admin/apoio/denuncia/", {"action": "marcar_analise", "_selected_action": [self.denuncia.pk]})
+        self.denuncia.refresh_from_db()
+
+        self.assertEqual(self.denuncia.status, "analise")
