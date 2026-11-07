@@ -1,80 +1,79 @@
-{% extends "apoio/base.html" %}
+{% extends "apoio/aluno.html" %}
 {% block titulo %}Avisar a escola{% endblock %}
 {% block corpo %}
-<div class="mx-auto" style="max-width: 720px">
-  <h1 class="h3 fw-bold">Avisar a escola</h1>
-  <p class="text-secondary">Só a coordenação lê. Você recebe um <strong>protocolo</strong> para acompanhar a resposta, sem precisar de login.</p>
+<div class="mx-auto max-w-3xl">
+  <h1 class="text-3xl font-bold text-neutral">Avisar a escola</h1>
+  <p class="mt-1 text-base-content/70">Só a coordenação lê. Você recebe um <strong>protocolo</strong> para acompanhar a resposta, sem precisar de login.</p>
 
-  <form method="post" enctype="multipart/form-data" class="card border-0 shadow-sm" novalidate>
+  <form method="post" enctype="multipart/form-data" class="card mt-6 bg-base-100 shadow-sm" novalidate>
     {% csrf_token %}
-    <div class="card-body p-4">
-      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="card-body gap-5">
+      {% if form.non_field_errors %}<div role="alert" class="alert alert-error">{{ form.non_field_errors }}</div>{% endif %}
 
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Quem está passando por isso?</label>
-        <div class="d-flex flex-wrap gap-3">
-          {% for r in form.quem %}<div class="form-check">{{ r.tag }}<label class="form-check-label" for="{{ r.id_for_label }}">{{ r.choice_label }}</label></div>{% endfor %}
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Quem está passando por isso?</legend>
+        <div class="flex flex-wrap gap-6">
+          {% for r in form.quem %}<label class="flex cursor-pointer items-center gap-2">{{ r.tag }} {{ r.choice_label }}</label>{% endfor %}
         </div>
-      </div>
+      </fieldset>
 
-      <div class="row g-3">
-        <div class="col-md-7">
-          <label class="form-label fw-semibold" for="{{ form.tipo.id_for_label }}">O que aconteceu?</label>
+      <div class="grid gap-4 md:grid-cols-5">
+        <fieldset class="fieldset md:col-span-3">
+          <legend class="fieldset-legend">O que aconteceu?</legend>
           {{ form.tipo }}
-          {% for e in form.tipo.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
-        </div>
-        <div class="col-md-5">
-          <label class="form-label fw-semibold" for="{{ form.plataforma.id_for_label }}">Onde?</label>
+          {% for e in form.tipo.errors %}<p class="text-error">{{ e }}</p>{% endfor %}
+        </fieldset>
+        <fieldset class="fieldset md:col-span-2">
+          <legend class="fieldset-legend">Onde?</legend>
           {{ form.plataforma }}
-          {% for e in form.plataforma.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
-        </div>
+          {% for e in form.plataforma.errors %}<p class="text-error">{{ e }}</p>{% endfor %}
+        </fieldset>
       </div>
 
-      <div class="mt-3">
-        <label class="form-label fw-semibold" for="{{ form.quando.id_for_label }}">Quando? <span class="text-secondary fw-normal">(opcional)</span></label>
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Quando? <span class="font-normal text-base-content/60">(opcional)</span></legend>
         {{ form.quando }}
-      </div>
+      </fieldset>
 
-      <div class="mt-3">
-        <label class="form-label fw-semibold" for="{{ form.descricao.id_for_label }}">Conte o que aconteceu</label>
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Conte o que aconteceu</legend>
         {{ form.descricao }}
-        {% for e in form.descricao.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
-      </div>
+        {% for e in form.descricao.errors %}<p class="text-error">{{ e }}</p>{% endfor %}
+      </fieldset>
 
-      <div class="mt-3">
-        <label class="form-label fw-semibold" for="{{ form.prova.id_for_label }}">Print ou arquivo <span class="text-secondary fw-normal">(opcional, até 5 MB)</span></label>
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Print ou arquivo <span class="font-normal text-base-content/60">(opcional, até 5 MB)</span></legend>
         {{ form.prova }}
-        {% for e in form.prova.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
-        <div class="form-text">Se for imagem íntima, <strong>não anexe</strong>: descreva e a coordenação te orienta.</div>
-      </div>
+        {% for e in form.prova.errors %}<p class="text-error">{{ e }}</p>{% endfor %}
+        <p class="label">Se for imagem íntima, não anexe: descreva e a coordenação te orienta.</p>
+      </fieldset>
 
-      <div class="form-check mt-3 p-3 ps-5 rounded bg-danger-subtle">
+      <label class="flex cursor-pointer items-start gap-3 rounded-box bg-error/10 p-4">
         {{ form.risco }}
-        <label class="form-check-label" for="{{ form.risco.id_for_label }}"><strong>Alguém corre risco agora</strong> (ameaça de agressão, de se machucar, de vazar algo)</label>
-      </div>
+        <span><strong>Alguém corre risco agora</strong> (ameaça de agressão, de se machucar, de vazar algo)</span>
+      </label>
 
-      <hr class="my-4">
+      <div class="divider my-0"></div>
 
-      <div class="form-check form-switch">
+      <label class="flex cursor-pointer items-start gap-3">
         {{ form.anonima }}
-        <label class="form-check-label fw-semibold" for="{{ form.anonima.id_for_label }}">Enviar anônimo</label>
-        <div class="form-text">Anônimo: a escola não sabe quem enviou, e não guardamos nome nem contato. Você acompanha pelo protocolo.</div>
-      </div>
-      <div id="identificacao" class="row g-3 mt-1">
-        <div class="col-md-6">
-          <label class="form-label" for="{{ form.nome.id_for_label }}">Seu nome</label>
+        <span><strong>Enviar anônimo</strong><br>
+          <span class="text-sm text-base-content/60">A escola não sabe quem enviou, e não guardamos nome nem contato. Você acompanha pelo protocolo.</span></span>
+      </label>
+      <div id="identificacao" class="grid gap-4 md:grid-cols-2">
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Seu nome</legend>
           {{ form.nome }}
-          {% for e in form.nome.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
-        </div>
-        <div class="col-md-6">
-          <label class="form-label" for="{{ form.contato.id_for_label }}">Turma ou contato</label>
+          {% for e in form.nome.errors %}<p class="text-error">{{ e }}</p>{% endfor %}
+        </fieldset>
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Turma ou contato</legend>
           {{ form.contato }}
-        </div>
-        <div class="col-12 form-text mt-1">Identificado: a coordenação pode te chamar para conversar com mais cuidado.</div>
+        </fieldset>
+        <p class="text-sm text-base-content/60 md:col-span-2">Identificado: a coordenação pode te chamar para conversar com mais cuidado.</p>
       </div>
-    </div>
-    <div class="card-footer bg-white p-4 pt-0 border-0">
-      <button class="btn btn-primary btn-lg w-100"><i class="bi bi-send"></i> Enviar relato</button>
+
+      <button class="btn btn-primary btn-lg w-full"><i class="bi bi-send"></i> Enviar relato</button>
     </div>
   </form>
 </div>
@@ -83,7 +82,7 @@
 <script>
   const anon = document.getElementById("{{ form.anonima.id_for_label }}");
   const ident = document.getElementById("identificacao");
-  const sync = () => ident.classList.toggle("d-none", anon.checked);
+  const sync = () => ident.classList.toggle("hidden", anon.checked);
   anon.addEventListener("change", sync); sync();
 </script>
 {% endblock %}

@@ -24,13 +24,22 @@ class DenunciaForm(forms.ModelForm):
         self.fields["tipo"].choices = [("", "Escolha…"), *Denuncia.Tipo.choices]
         self.fields["plataforma"].choices = [("", "Escolha…"), *Denuncia.Plataforma.choices]
         for nome, campo in self.fields.items():
-            w = campo.widget
-            if isinstance(w, (forms.CheckboxInput, forms.RadioSelect)):
-                w.attrs["class"] = "form-check-input"
+            w = campo.widget  # classes do daisyUI
+            w.attrs.setdefault("aria-label", str(campo.label))  # o legend do fieldset não rotula o input
+            if nome == "anonima":
+                w.attrs["class"] = "toggle toggle-primary"
+            elif nome == "risco":
+                w.attrs["class"] = "checkbox checkbox-error"
+            elif isinstance(w, forms.RadioSelect):
+                w.attrs["class"] = "radio radio-primary radio-sm"
             elif isinstance(w, forms.Select):
-                w.attrs["class"] = "form-select"
+                w.attrs["class"] = "select w-full"
+            elif isinstance(w, forms.Textarea):
+                w.attrs["class"] = "textarea w-full"
+            elif isinstance(w, forms.ClearableFileInput):
+                w.attrs["class"] = "file-input w-full"
             else:
-                w.attrs["class"] = "form-control"
+                w.attrs["class"] = "input w-full"
 
     def clean_prova(self):
         f = self.cleaned_data.get("prova")
@@ -54,7 +63,7 @@ class RespostaForm(forms.ModelForm):
         model = Denuncia
         fields = ["status", "resposta"]
         widgets = {
-            "status": forms.Select(attrs={"class": "form-select"}),
-            "resposta": forms.Textarea(attrs={"class": "form-control", "rows": 4,
+            "status": forms.Select(attrs={"class": "select w-full", "aria-label": "Status"}),
+            "resposta": forms.Textarea(attrs={"class": "textarea w-full", "rows": 4, "aria-label": "Mensagem para quem relatou",
                                               "placeholder": "Quem relatou vê esta mensagem ao consultar o protocolo."}),
         }

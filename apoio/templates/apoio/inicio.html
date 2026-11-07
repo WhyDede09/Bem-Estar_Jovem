@@ -1,50 +1,40 @@
-{% extends "apoio/base.html" %}
+{% extends "apoio/aluno.html" %}
 {% block titulo %}Início{% endblock %}
 {% block corpo %}
-<div class="text-center mx-auto mb-4" style="max-width: 640px">
-  <h1 class="fw-bold mt-2">Você <span class="destaque">não</span> está sozinho(a).</h1>
-  <p class="lead text-secondary">Ofensas, exposição, ameaças ou exclusão na internet não são "brincadeira" e não são culpa de quem sofre.
-    Aqui você encontra o que fazer agora, e pode avisar a escola <strong>sem se identificar</strong>.</p>
-</div>
+<section class="mx-auto mb-10 max-w-2xl text-center">
+  <h1 class="text-4xl font-extrabold tracking-tight text-neutral sm:text-5xl">Você <span class="text-accent">não</span> está sozinho(a).</h1>
+  <p class="mt-4 text-lg text-base-content/70">Ofensas, exposição, ameaças ou exclusão na internet não são "brincadeira" e não são culpa de quem sofre.
+    Aqui você encontra o que fazer agora, e pode avisar a escola <strong class="text-base-content">sem se identificar</strong>.</p>
+</section>
 
-<div class="row g-3 justify-content-center">
-  <div class="col-md-4">
-    <a href="{% url 'guia' %}" class="card card-opcao h-100 text-decoration-none text-body border-0 shadow-sm">
-      <div class="card-body p-4">
-        <i class="bi bi-heart-pulse icone-grande text-laranja"></i>
-        <h2 class="h5 mt-3">Está acontecendo comigo</h2>
-        <p class="text-secondary mb-0">Passo a passo: como guardar provas, bloquear, denunciar e com quem falar.</p>
-      </div>
-    </a>
-  </div>
-  <div class="col-md-4">
-    <a href="{% url 'colega' %}" class="card card-opcao h-100 text-decoration-none text-body border-0 shadow-sm">
-      <div class="card-body p-4">
-        <i class="bi bi-people icone-grande text-ciano"></i>
-        <h2 class="h5 mt-3">Vi acontecer com alguém</h2>
-        <p class="text-secondary mb-0">Como ajudar um colega sem aumentar a exposição dele.</p>
-      </div>
-    </a>
-  </div>
-  <div class="col-md-4">
-    <a href="{% url 'denunciar' %}" class="card card-opcao h-100 text-decoration-none text-body border-0 shadow-sm">
-      <div class="card-body p-4">
-        <i class="bi bi-envelope-paper icone-grande text-primary"></i>
-        <h2 class="h5 mt-3">Avisar a escola</h2>
-        <p class="text-secondary mb-0">Relato anônimo ou identificado. Você recebe um protocolo para acompanhar.</p>
-      </div>
-    </a>
-  </div>
-</div>
-
-<div class="row g-3 mt-2 justify-content-center">
-  <div class="col-lg-8">
-    <div class="alert alert-light border d-flex gap-3 align-items-start mb-0">
-      <i class="bi bi-lock fs-4 text-ciano"></i>
-      <div><strong>Sua privacidade.</strong> Não pedimos login. No relato anônimo não guardamos nome nem contato.
-        Só a coordenação vê os relatos, e ela vê <em>o que aconteceu</em>, não um perfil seu.
-        O botão vermelho <strong>Sair rápido</strong> (ou <kbd>Esc</kbd> duas vezes) fecha esta página na hora.</div>
+<div class="grid gap-4 md:grid-cols-3">
+  <a href="{% url 'guia' %}" class="card bg-base-100 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+    <div class="card-body">
+      <i class="bi bi-heart-pulse text-4xl text-accent"></i>
+      <h2 class="card-title mt-2">Está acontecendo comigo</h2>
+      <p class="text-base-content/70">Passo a passo: como guardar provas, bloquear, denunciar e com quem falar.</p>
     </div>
-  </div>
+  </a>
+  <a href="{% url 'colega' %}" class="card bg-base-100 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+    <div class="card-body">
+      <i class="bi bi-people text-4xl text-secondary"></i>
+      <h2 class="card-title mt-2">Vi acontecer com alguém</h2>
+      <p class="text-base-content/70">Como ajudar um colega sem aumentar a exposição dele.</p>
+    </div>
+  </a>
+  <a href="{% url 'denunciar' %}" class="card bg-primary text-primary-content shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+    <div class="card-body">
+      <i class="bi bi-envelope-paper text-4xl"></i>
+      <h2 class="card-title mt-2">Avisar a escola</h2>
+      <p class="opacity-85">Relato anônimo ou identificado. Você recebe um protocolo para acompanhar.</p>
+    </div>
+  </a>
+</div>
+
+<div role="alert" class="alert mx-auto mt-8 max-w-3xl items-start border-secondary/40 bg-base-100">
+  <i class="bi bi-lock text-2xl text-secondary"></i>
+  <div><strong>Sua privacidade.</strong> Não pedimos login. No relato anônimo não guardamos nome nem contato.
+    Só a coordenação vê os relatos, e ela vê <em>o que aconteceu</em>, não um perfil seu.
+    O botão vermelho <strong>Sair rápido</strong> (ou <kbd class="kbd kbd-sm">Esc</kbd> duas vezes) fecha esta página na hora.</div>
 </div>
 {% endblock %}

@@ -70,6 +70,11 @@ class Denuncia(models.Model):
         ordering = ["-risco", "-criada"]
 
     @property
+    def etapa(self) -> int:
+        """Posição do status (1..4), para a linha do tempo."""
+        return list(self.Status.values).index(self.status) + 1
+
+    @property
     def urgente(self) -> bool:
         return self.risco or self.tipo == self.Tipo.AMEACA
 

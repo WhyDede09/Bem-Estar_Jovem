@@ -1,81 +1,55 @@
 {% load static %}<!doctype html>
-<html lang="pt-br">
+<html lang="pt-br" data-theme="escudo">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>{% block titulo %}Escudo{% endblock %} · Escudo</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0/daisyui.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.4"></script>
 <style>
-  /* Paleta: marinho = confiança/anonimato · ciano = acolhimento/calma · laranja = coragem/esperança (detalhe) */
+  /* Paleta (fonte única): marinho = confiança/anonimato · ciano = acolhimento/calma · laranja = coragem (detalhe) */
   :root {
-    --marinho: #0a2fb8; --marinho-escuro: #071f80; --ciano: #00b8e6; --ciano-claro: #e3f8ff; --laranja: #ff8a00;
-    --bs-primary: #0a2fb8; --bs-primary-rgb: 10, 47, 184;
-    --bs-info: #00b8e6; --bs-info-rgb: 0, 184, 230;
-    --bs-warning: #ff8a00; --bs-warning-rgb: 255, 138, 0;
-    --bs-link-color: #0a2fb8; --bs-link-color-rgb: 10, 47, 184;
-    --bs-link-hover-color: #071f80; --bs-link-hover-color-rgb: 7, 31, 128;
+    --esc-base-100: #ffffff; --esc-base-200: #e3f8ff; --esc-base-300: #bdeefc; --esc-base-content: #0f1b3d;
+    --esc-primary: #0a2fb8;  --esc-primary-content: #ffffff;
+    --esc-secondary: #00b8e6; --esc-secondary-content: #03263a;
+    --esc-accent: #ff8a00;   --esc-accent-content: #1f1000;
+    --esc-neutral: #071f80;  --esc-neutral-content: #ffffff;
+    --esc-success: #16a34a;  --esc-warning: #ff8a00; --esc-error: #dc2626;
   }
-  body { background: var(--ciano-claro); }
-  h1, .h1, .h3 { color: var(--marinho-escuro); }
-  .btn-primary { --bs-btn-bg: var(--marinho); --bs-btn-border-color: var(--marinho); --bs-btn-hover-bg: var(--marinho-escuro);
-                 --bs-btn-hover-border-color: var(--marinho-escuro); --bs-btn-active-bg: var(--marinho-escuro); }
-  .btn-outline-primary { --bs-btn-color: var(--marinho); --bs-btn-border-color: var(--marinho); --bs-btn-hover-bg: var(--marinho);
-                         --bs-btn-hover-border-color: var(--marinho); --bs-btn-active-bg: var(--marinho); --bs-btn-active-border-color: var(--marinho); }
-  .nav-pills { --bs-nav-pills-link-active-bg: var(--marinho); }
-  .progress-bar { background-color: var(--ciano); }
-  .form-check-input:checked { background-color: var(--marinho); border-color: var(--marinho); }
-  .form-control:focus, .form-select:focus, .form-check-input:focus { border-color: var(--ciano); box-shadow: 0 0 0 .25rem rgba(0, 184, 230, .3); }
-  .navbar { background: linear-gradient(90deg, var(--marinho-escuro), var(--marinho)) !important; }
-  .navbar .nav-link, .navbar-brand { color: #fff !important; }
-  .navbar .nav-link:hover { color: var(--ciano) !important; }
-  .navbar-brand i { color: var(--laranja); }
-  .text-laranja { color: var(--laranja) !important; }
-  .text-ciano { color: var(--ciano) !important; }
-  .destaque { color: var(--laranja); }
-  .sair-rapido { position: fixed; right: 16px; bottom: 16px; z-index: 1050; box-shadow: 0 4px 14px rgba(0,0,0,.2); }
-  .card-opcao { transition: transform .15s, box-shadow .15s; }
-  .card-opcao:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-  .icone-grande { font-size: 2.2rem; }
-  footer { font-size: .9rem; }
+  /* Tema daisyUI "escudo" */
+  [data-theme="escudo"] {
+    color-scheme: light;
+    --color-base-100: var(--esc-base-100); --color-base-200: var(--esc-base-200); --color-base-300: var(--esc-base-300);
+    --color-base-content: var(--esc-base-content);
+    --color-primary: var(--esc-primary); --color-primary-content: var(--esc-primary-content);
+    --color-secondary: var(--esc-secondary); --color-secondary-content: var(--esc-secondary-content);
+    --color-accent: var(--esc-accent); --color-accent-content: var(--esc-accent-content);
+    --color-neutral: var(--esc-neutral); --color-neutral-content: var(--esc-neutral-content);
+    --color-info: var(--esc-secondary); --color-info-content: var(--esc-secondary-content);
+    --color-success: var(--esc-success); --color-success-content: #ffffff;
+    --color-warning: var(--esc-warning); --color-warning-content: var(--esc-accent-content);
+    --color-error: var(--esc-error); --color-error-content: #ffffff;
+    --radius-selector: 1rem; --radius-field: .6rem; --radius-box: 1rem;
+    --size-selector: .25rem; --size-field: .25rem; --border: 1px; --depth: 1; --noise: 0;
+  }
+</style>
+<style type="text/tailwindcss">
+  /* As mesmas cores para o Tailwind, para funcionar bg-primary/10, from-neutral, ring-error etc. */
+  @theme inline {
+    --color-base-100: var(--esc-base-100); --color-base-200: var(--esc-base-200); --color-base-300: var(--esc-base-300);
+    --color-base-content: var(--esc-base-content);
+    --color-primary: var(--esc-primary); --color-primary-content: var(--esc-primary-content);
+    --color-secondary: var(--esc-secondary); --color-accent: var(--esc-accent);
+    --color-neutral: var(--esc-neutral); --color-neutral-content: var(--esc-neutral-content);
+    --color-success: var(--esc-success); --color-warning: var(--esc-warning); --color-error: var(--esc-error);
+  }
 </style>
 {% block head %}{% endblock %}
 </head>
-<body class="d-flex flex-column min-vh-100">
-<nav class="navbar navbar-expand">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="{% url 'inicio' %}"><i class="bi bi-shield-fill-check"></i> Escudo</a>
-    <ul class="navbar-nav ms-auto">
-      {% if user.is_staff %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'painel' %}">Painel</a></li>
-        <li class="nav-item"><form method="post" action="{% url 'sair' %}">{% csrf_token %}<button class="btn btn-link nav-link">Sair</button></form></li>
-      {% else %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'acompanhar' %}"><i class="bi bi-search"></i><span class="d-none d-sm-inline"> Acompanhar relato</span></a></li>
-      {% endif %}
-    </ul>
-  </div>
-</nav>
-
-<main class="flex-grow-1 py-4">
-  <div class="container">{% block corpo %}{% endblock %}</div>
-</main>
-
-<footer class="bg-white border-top py-3">
-  <div class="container text-secondary">
-    <i class="bi bi-telephone"></i> Precisa conversar agora? <strong>CVV 188</strong> (24h, gratuito, sigiloso) ·
-    Em perigo: <strong>190</strong> ·
-    Crimes na internet: <a href="https://new.safernet.org.br/denuncie" target="_blank" rel="noopener">SaferNet</a>
-    <div class="small mt-1">O Escudo orienta e encaminha. Não substitui profissionais de saúde nem faz diagnóstico.</div>
-  </div>
-</footer>
-
-{% if not user.is_staff %}
-<a href="https://www.google.com/search?q=previs%C3%A3o+do+tempo" class="btn btn-danger sair-rapido" id="sair-rapido"
-   title="Sai do site na hora (ou aperte Esc duas vezes)"><i class="bi bi-box-arrow-right"></i> Sair rápido</a>
-{% endif %}
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<body class="min-h-screen bg-base-200 text-base-content">
+{% block pagina %}{% endblock %}
 <script src="{% static 'escudo.js' %}"></script>
 {% block scripts %}{% endblock %}
 </body>

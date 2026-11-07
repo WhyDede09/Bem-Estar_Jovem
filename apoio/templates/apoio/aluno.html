@@ -1,0 +1,28 @@
+{% extends "apoio/base.html" %}
+{% comment %}Layout do link dos ALUNOS: não tem nenhum link para a coordenação.{% endcomment %}
+{% block pagina %}
+<div class="flex min-h-screen flex-col">
+  <header class="navbar bg-gradient-to-r from-neutral to-primary text-primary-content shadow">
+    <div class="mx-auto flex w-full max-w-5xl items-center px-2">
+      <a href="{% url 'inicio' %}" class="btn btn-ghost text-xl font-bold"><i class="bi bi-shield-fill-check text-accent"></i> Escudo</a>
+      <div class="flex-1"></div>
+      <a href="{% url 'acompanhar' %}" class="btn btn-ghost btn-sm"><i class="bi bi-search"></i><span class="hidden sm:inline">Acompanhar relato</span></a>
+    </div>
+  </header>
+
+  <main class="mx-auto w-full max-w-5xl flex-1 px-4 py-8">{% block corpo %}{% endblock %}</main>
+
+  <footer class="border-t border-base-300 bg-base-100 px-4 py-4 text-sm text-base-content/70">
+    <div class="mx-auto max-w-5xl">
+      <i class="bi bi-telephone"></i> Precisa conversar agora? <strong class="text-base-content">CVV 188</strong> (24h, gratuito, sigiloso) ·
+      Em perigo: <strong class="text-base-content">190</strong> ·
+      Crimes na internet: <a class="link link-primary" href="https://new.safernet.org.br/denuncie" target="_blank" rel="noopener">SaferNet</a>
+      <p class="mt-1 text-xs">O Escudo orienta e encaminha. Não substitui profissionais de saúde nem faz diagnóstico.</p>
+    </div>
+  </footer>
+</div>
+
+<a href="https://www.google.com/search?q=previs%C3%A3o+do+tempo" id="sair-rapido"
+   class="btn btn-error fixed bottom-4 right-4 z-50 shadow-lg" title="Sai do site na hora (ou aperte Esc duas vezes)">
+  <i class="bi bi-box-arrow-right"></i> Sair rápido</a>
+{% endblock %}

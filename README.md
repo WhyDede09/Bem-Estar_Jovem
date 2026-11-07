@@ -1,7 +1,7 @@
 # Escudo 🛡️
 
 Apoio contra cyberbullying para estudantes: o que fazer agora, como ajudar um colega
-e como avisar a escola **sem se identificar**. Django + JS + Bootstrap.
+e como avisar a escola **sem se identificar**. Django + JS + Tailwind CSS + daisyUI.
 
 ## Rodar
 
@@ -11,8 +11,8 @@ python manage.py demo        # coordenação + relatos FICTÍCIOS (apaga os atua
 python manage.py runserver
 ```
 
-- Aluno: http://localhost:8000 (sem login)
-- Coordenação: http://localhost:8000/coordenacao/ (`coordenacao` / `coord1234`, só para demo local)
+- **Link dos alunos:** http://localhost:8000 (sem login)
+- **Link da coordenação:** http://localhost:8000/coordenacao/ (`coordenacao` / `coord1234`, só para demo local)
 - O comando `demo` imprime um protocolo de exemplo para testar "Acompanhar relato".
 
 ## O que tem
