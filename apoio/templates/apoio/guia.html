@@ -5,7 +5,7 @@
   <ul class="steps steps-horizontal mb-6 w-full text-xs sm:text-sm" id="etapas">
     <li class="step step-primary">Respire</li>
     <li class="step">Provas</li>
-    <li class="step">Bloquear</li>
+    <li class="step">Proteger</li>
     <li class="step">Falar</li>
   </ul>
 
@@ -25,6 +25,7 @@
     <div class="card-body">
       <h1 class="card-title text-2xl text-neutral"><i class="bi bi-camera text-secondary"></i> Guarde as provas</h1>
       <p>Antes de bloquear ou de alguém apagar, salve o que aconteceu. Isso ajuda a escola e, se for preciso, a polícia.</p>
+      <p class="text-sm"><strong>Foi pessoalmente, na escola?</strong> Anote o quanto antes: <strong>o que</strong> aconteceu, <strong>onde</strong>, <strong>quando</strong> e <strong>quem viu</strong>. Isso já é uma prova.</p>
       <div class="space-y-2">
         <label class="flex cursor-pointer items-center gap-3 rounded-box border border-base-300 p-3"><input type="checkbox" class="checkbox checkbox-primary"> <span>Print da mensagem/post <strong>com data e hora</strong> aparecendo</span></label>
         <label class="flex cursor-pointer items-center gap-3 rounded-box border border-base-300 p-3"><input type="checkbox" class="checkbox checkbox-primary"> <span>Print do <strong>perfil</strong> de quem enviou (nome de usuário visível)</span></label>
@@ -40,17 +41,36 @@
 
   <section class="passo card hidden bg-base-100 shadow-sm" data-passo="3">
     <div class="card-body">
-      <h1 class="card-title text-2xl text-neutral"><i class="bi bi-slash-circle text-secondary"></i> Bloqueie e denuncie na plataforma</h1>
+      <h1 class="card-title text-2xl text-neutral"><i class="bi bi-shield-check text-secondary"></i> Proteja-se e denuncie</h1>
       <p>Onde aconteceu?</p>
-      <div class="flex flex-wrap gap-2" id="plataformas">
-        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="whatsapp">WhatsApp</button>
-        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="instagram">Instagram</button>
-        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="tiktok">TikTok</button>
-        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="discord">Discord</button>
-        <button type="button" class="btn btn-sm btn-outline btn-primary" data-plat="jogo">Jogo online</button>
+      <div id="locais" class="space-y-3">
+        <div>
+          <p class="rotulo mb-2"><i class="bi bi-building"></i> Na escola</p>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="sala">Sala de aula</button>
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="patio">Pátio / intervalo</button>
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="banheiro">Banheiro</button>
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="corredor">Corredor</button>
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="quadra">Quadra / educação física</button>
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="entrada">Entrada ou saída</button>
+          </div>
+        </div>
+        <div>
+          <p class="rotulo mb-2"><i class="bi bi-phone"></i> Na internet</p>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="whatsapp">WhatsApp</button>
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="instagram">Instagram</button>
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="tiktok">TikTok</button>
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="discord">Discord</button>
+            <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="jogo">Jogo online</button>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" class="btn btn-sm btn-outline btn-primary" data-local="outra">Outro lugar</button>
+        </div>
       </div>
       <div class="rounded-box bg-base-200 p-4" id="instrucao"></div>
-      <p class="text-sm text-base-content/60">A denúncia na plataforma é anônima: a pessoa não fica sabendo quem denunciou.</p>
+      <p class="text-sm text-base-content/60" id="nota-local"></p>
     </div>
   </section>
 
@@ -75,22 +95,36 @@
 {% endblock %}
 {% block scripts %}
 <script>
-  // ponytail: instruções genéricas por plataforma; o caminho exato dos menus muda com as versões dos apps.
+  // ponytail: instruções genéricas; o caminho exato dos menus dos apps muda com as versões.
+  const NA_ESCOLA = "Procure um <strong>adulto de confiança</strong> da escola (professor, inspetor, coordenação) o quanto antes. "
+                  + "Se não se sentir seguro(a) para falar pessoalmente, use o <strong>Avisar a escola</strong>: dá para ser anônimo.";
   const INSTRUCOES = {
+    sala: "Fale com o(a) <strong>professor(a)</strong> no fim da aula, em particular, ou peça para trocar de lugar. " + NA_ESCOLA,
+    patio: "Fique perto de onde há <strong>adultos ou inspetores</strong> e de colegas de confiança durante o intervalo. " + NA_ESCOLA,
+    banheiro: "Se puder, vá ao banheiro <strong>acompanhado(a)</strong> ou em horários de aula. Lugar sem câmera e sem adulto exige cuidado redobrado. " + NA_ESCOLA,
+    corredor: "Evite ficar sozinho(a) nas trocas de sala; ande com colegas e perto de salas com professores. " + NA_ESCOLA,
+    quadra: "Avise o(a) <strong>professor(a) de educação física</strong>, inclusive sobre provocações no vestiário. " + NA_ESCOLA,
+    entrada: "Saia junto com colegas ou espere perto da portaria. Se houver ameaça de te esperar na saída, avise a escola <strong>antes</strong> do horário e, em perigo, ligue <strong>190</strong>.",
     whatsapp: "Abra a conversa (ou o grupo) → toque no nome no topo → <strong>Denunciar</strong> e depois <strong>Bloquear</strong>. Em grupo, você também pode <strong>Sair do grupo</strong>. Tire os prints antes: ao denunciar, as últimas mensagens vão para o WhatsApp.",
     instagram: "No post, comentário ou perfil, toque nos <strong>três pontinhos</strong> → <strong>Denunciar</strong>. No perfil você também pode <strong>Restringir</strong> (a pessoa não percebe) ou <strong>Bloquear</strong>.",
     tiktok: "Segure o dedo no vídeo ou comentário → <strong>Denunciar</strong>. No perfil: ícone de compartilhar → <strong>Denunciar</strong> / <strong>Bloquear</strong>. Dá para limitar quem comenta nos seus vídeos em Privacidade.",
     discord: "Clique com o botão direito (ou segure) na mensagem → <strong>Denunciar mensagem</strong>. No perfil da pessoa → <strong>Bloquear</strong>. Avise a moderação do servidor também.",
     jogo: "Quase todo jogo tem <strong>Denunciar jogador</strong> no perfil ou no placar da partida, e opção de <strong>silenciar</strong> chat/voz. Anote o nome de usuário exato antes de sair da partida.",
+    outra: "Onde quer que tenha sido: anote o que aconteceu, quando e quem viu, e procure um adulto de confiança. Se aconteceu fora da escola mas envolve colegas, a escola também pode ajudar: use o <strong>Avisar a escola</strong>.",
   };
+  const ONLINE = ["whatsapp", "instagram", "tiktok", "discord", "jogo"];
   const instr = document.getElementById("instrucao");
-  const botoes = document.querySelectorAll("#plataformas button");
-  const mostrar = (p) => {
-    instr.innerHTML = INSTRUCOES[p];
-    botoes.forEach(b => b.classList.toggle("btn-outline", b.dataset.plat !== p));
+  const nota = document.getElementById("nota-local");
+  const botoes = document.querySelectorAll("#locais button");
+  const mostrar = (local) => {
+    instr.innerHTML = INSTRUCOES[local];
+    nota.textContent = ONLINE.includes(local)
+      ? "A denúncia na plataforma é anônima: a pessoa não fica sabendo quem denunciou."
+      : "Contar para um adulto não é \"dedurar\": é se proteger, e a escola tem o dever de agir.";
+    botoes.forEach(b => b.classList.toggle("btn-outline", b.dataset.local !== local));
   };
-  botoes.forEach(b => b.addEventListener("click", () => mostrar(b.dataset.plat)));
-  mostrar("whatsapp");
+  botoes.forEach(b => b.addEventListener("click", () => mostrar(b.dataset.local)));
+  mostrar("sala");
 
   const passos = document.querySelectorAll(".passo");
   const etapas = document.querySelectorAll("#etapas .step");

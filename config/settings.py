@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apoio',
+    'accounts',
 ]
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'Administração',
+    'site_header': 'Bem-Estar Jovem',
+    'site_brand': 'Bem-Estar Jovem',
+    'welcome_sign': 'Bem-vindo à administração',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -105,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'America/Sao_Paulo'
+TIME_ZONE = 'America/Campo_Grande'
 
 USE_I18N = True
 
@@ -131,5 +140,3 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # provas ficam fora de STATIC/MEDIA públicos: só a coordenação baixa, via view protegida
 PROVAS_DIR = BASE_DIR / "provas"
 LOGIN_URL = "login"
-LOGIN_REDIRECT_URL = "painel"
-LOGOUT_REDIRECT_URL = "login"

@@ -1,71 +1,92 @@
 {% extends "apoio/coord.html" %}
 {% block titulo %}Painel da coordenação{% endblock %}
 {% block corpo %}
-<h1 class="text-3xl font-bold text-neutral">Painel da coordenação</h1>
-<p class="mb-6 text-sm text-base-content/60">Relatos de fatos, não perfis de alunos. Urgentes aparecem primeiro.</p>
+<h1 class="text-3xl font-bold text-neutral sm:text-4xl">Painel da coordenação</h1>
+<p class="mt-1 mb-6 text-base-content/70">Relatos de fatos, não perfis de alunos. Urgentes aparecem primeiro.</p>
 
-<div class="mb-6 grid gap-4 md:grid-cols-4">
-  <div class="stats bg-base-100 shadow-sm">
-    <div class="stat">
-      <div class="stat-figure text-primary"><i class="bi bi-inbox text-3xl"></i></div>
-      <div class="stat-title">Em aberto</div>
-      <div class="stat-value text-primary">{{ abertas }}</div>
+<div class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-[1fr_1fr_1.4fr_1.4fr]">
+  <div class="card border border-base-300 bg-base-100 shadow-sm">
+    <div class="card-body gap-1">
+      <span class="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary"><i class="bi bi-inbox text-xl"></i></span>
+      <h2 class="mt-3 text-lg font-semibold">Em aberto</h2>
+      <p class="text-6xl font-extrabold leading-none text-primary">{{ abertas }}</p>
+      <p class="text-base-content/60">relatos não encerrados</p>
     </div>
   </div>
-  <div class="stats bg-base-100 shadow-sm {% if urgentes %}ring-2 ring-error{% endif %}">
-    <div class="stat">
-      <div class="stat-figure text-error"><i class="bi bi-exclamation-octagon text-3xl"></i></div>
-      <div class="stat-title">Urgentes em aberto</div>
-      <div class="stat-value {% if urgentes %}text-error{% endif %}">{{ urgentes }}</div>
+
+  <div class="card border shadow-sm {% if urgentes %}border-error/60 bg-red-50{% else %}border-base-300 bg-base-100{% endif %}">
+    <div class="card-body gap-1">
+      <span class="grid size-11 place-items-center rounded-xl {% if urgentes %}bg-error/10 text-error{% else %}bg-base-200 text-base-content/50{% endif %}"><i class="bi bi-exclamation-octagon text-xl"></i></span>
+      <h2 class="mt-3 text-lg font-semibold">Urgentes em aberto</h2>
+      <p class="text-6xl font-extrabold leading-none {% if urgentes %}text-error{% else %}text-base-content/40{% endif %}">{{ urgentes }}</p>
+      <p class="text-base-content/60">ameaça ou risco marcado</p>
     </div>
   </div>
-  <div class="card bg-base-100 shadow-sm">
-    <div class="card-body p-4">
-      <div class="text-sm text-base-content/60">Por tipo</div>
+
+  <div class="card border border-base-300 bg-base-100 shadow-sm">
+    <div class="card-body gap-3">
+      <h2 class="flex items-center gap-2 text-lg font-semibold"><i class="bi bi-tag text-xl"></i> Por tipo</h2>
       {% for t in por_tipo|slice:":4" %}
-      <div class="flex justify-between text-sm"><span class="truncate pr-2">{{ t.nome }}</span><span>{{ t.n }}</span></div>
-      <progress class="progress progress-secondary h-1.5" value="{{ t.pct }}" max="100"></progress>
+      <div>
+        <div class="flex justify-between gap-2 text-sm"><span class="truncate">{{ t.nome }}</span><span class="font-medium">{{ t.n }}</span></div>
+        <progress class="progress progress-primary mt-1 h-2" value="{{ t.pct }}" max="100"></progress>
+      </div>
+      {% empty %}<p class="text-sm text-base-content/60">Sem dados ainda.</p>
       {% endfor %}
     </div>
   </div>
-  <div class="card bg-base-100 shadow-sm">
-    <div class="card-body p-4">
-      <div class="text-sm text-base-content/60">Por plataforma</div>
+
+  <div class="card border border-base-300 bg-base-100 shadow-sm">
+    <div class="card-body gap-3">
+      <h2 class="flex items-center gap-2 text-lg font-semibold"><i class="bi bi-geo-alt text-xl"></i> Por local</h2>
       {% for p in por_plataforma|slice:":4" %}
-      <div class="flex justify-between text-sm"><span>{{ p.nome }}</span><span>{{ p.n }}</span></div>
-      <progress class="progress progress-accent h-1.5" value="{{ p.pct }}" max="100"></progress>
+      <div>
+        <div class="flex justify-between gap-2 text-sm"><span>{{ p.nome }}</span><span class="font-medium">{{ p.n }}</span></div>
+        <progress class="progress progress-accent mt-1 h-2" value="{{ p.pct }}" max="100"></progress>
+      </div>
+      {% empty %}<p class="text-sm text-base-content/60">Sem dados ainda.</p>
       {% endfor %}
     </div>
   </div>
 </div>
 
-<div role="tablist" class="tabs tabs-box mb-4 w-fit max-w-full overflow-x-auto bg-base-100">
-  <a role="tab" class="tab {% if not status_atual %}tab-active{% endif %}" href="?">Todos</a>
+<nav class="mb-4 flex flex-wrap gap-2" aria-label="Filtrar por status">
+  <a class="btn {% if not status_atual %}btn-primary{% else %}btn-outline border-base-300 bg-base-100 font-normal{% endif %}" href="?">Todos</a>
   {% for v, n in status_choices %}
-  <a role="tab" class="tab whitespace-nowrap {% if status_atual == v %}tab-active{% endif %}" href="?status={{ v }}">{{ n }}</a>
+  <a class="btn {% if status_atual == v %}btn-primary{% else %}btn-outline border-base-300 bg-base-100 font-normal{% endif %}" href="?status={{ v }}">{{ n }}</a>
   {% endfor %}
-</div>
+</nav>
 
-<ul class="list rounded-box bg-base-100 shadow-sm">
+<ul class="overflow-hidden rounded-box border border-base-300 bg-base-100 shadow-sm">
   {% for d in denuncias %}
-  <li>
-    <a href="{% url 'detalhe' d.pk %}" class="list-row items-center transition hover:bg-base-200 {% if d.urgente and d.status != 'encerrada' %}border-l-4 border-error{% endif %}">
-      <div class="list-col-grow min-w-0">
-        <div class="flex flex-wrap items-center gap-2">
-          {% if d.urgente %}<span class="badge badge-error badge-sm"><i class="bi bi-exclamation-octagon"></i> Urgente</span>{% endif %}
-          <strong>{{ d.get_tipo_display }}</strong><span class="text-base-content/60">· {{ d.get_plataforma_display }}</span>
+  {% with urg=d.urgente %}
+  <li class="border-b border-base-300 last:border-b-0">
+    <a href="{% url 'detalhe' d.pk %}"
+       class="flex items-center gap-4 p-4 transition hover:bg-base-200/60 sm:px-5 {% if urg and d.status != 'encerrada' %}border-l-4 border-error bg-red-50{% endif %}">
+      <span class="hidden size-12 shrink-0 place-items-center rounded-xl sm:grid {% if urg %}bg-error/10 text-error{% else %}bg-primary/5 text-primary{% endif %}">
+        <i class="bi {{ d.icone_tipo }} text-xl"></i></span>
+
+      <div class="min-w-0 flex-1">
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+          {% if urg %}<span class="badge badge-error">Urgente</span>{% endif %}
+          <strong class="text-lg">{{ d.get_tipo_display }}</strong>
+          <span class="text-base-content/40">•</span>
+          <span class="flex items-center gap-1 text-base-content/70"><i class="bi {{ d.icone_plataforma }}"></i> {{ d.get_plataforma_display }}</span>
         </div>
-        <p class="truncate text-sm text-base-content/60">{{ d.descricao }}</p>
+        <p class="mt-1 line-clamp-2 text-base-content/70">{{ d.descricao }}</p>
       </div>
-      <div class="text-right text-sm">
-        <span class="badge badge-outline {% if d.status == 'recebida' %}badge-secondary{% elif d.status == 'encerrada' %}badge-ghost{% else %}badge-primary{% endif %}">{{ d.get_status_display }}</span>
-        <div class="mt-1 whitespace-nowrap text-base-content/60">{{ d.criada|timesince }} atrás</div>
-        <div class="whitespace-nowrap text-base-content/60">{% if d.anonima %}<i class="bi bi-incognito"></i> anônimo{% else %}<i class="bi bi-person"></i> identificado{% endif %}</div>
+
+      <div class="hidden shrink-0 space-y-1 border-l border-base-300 pl-5 text-sm text-base-content/70 md:block">
+        <div class="flex items-center gap-2 whitespace-nowrap"><i class="bi bi-clock"></i> {{ d.criada|timesince }} atrás</div>
+        <div class="flex items-center gap-2 whitespace-nowrap">{% if d.anonima %}<i class="bi bi-person"></i> anônimo{% else %}<i class="bi bi-person-check"></i> identificado{% endif %}</div>
       </div>
+
+      <span class="badge badge-lg shrink-0 badge-outline {% if d.status == 'recebida' %}badge-secondary{% elif d.status == 'encerrada' %}badge-ghost{% else %}badge-primary{% endif %}">{{ d.get_status_display }}</span>
     </a>
   </li>
+  {% endwith %}
   {% empty %}
-  <li class="p-6 text-center text-base-content/60">Nenhum relato aqui.</li>
+  <li class="p-8 text-center text-base-content/60">Nenhum relato aqui.</li>
   {% endfor %}
 </ul>
 {% endblock %}

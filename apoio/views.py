@@ -11,7 +11,7 @@ from .models import Denuncia
 staff = staff_member_required(login_url="login")
 
 
-# ---------- aluno (sem login: pedir conta afasta quem tem medo de se expor) ----------
+#alunos
 
 def inicio(request):
     return render(request, "apoio/inicio.html")
@@ -38,7 +38,6 @@ def denunciar(request):
                         initial={"quem": request.GET.get("quem", "comigo")})
     if form.is_valid():
         d = form.save()
-        # protocolo vai pela sessão, não pela URL (não fica no histórico do navegador)
         request.session["ultimo_protocolo"] = d.protocolo
         return redirect("enviada")
     return render(request, "apoio/denunciar.html", {"form": form})
@@ -55,14 +54,18 @@ def enviada(request):
 def acompanhar(request):
     d, erro = None, False
     codigo = request.POST.get("protocolo", "").strip().upper()
-    if codigo:  # POST: o código não aparece na URL
+    if codigo:
         d = Denuncia.objects.filter(protocolo=codigo).first()
         erro = d is None
-    return render(request, "apoio/acompanhar.html", {"d": d, "erro": erro, "codigo": codigo})
+    return render(request, "apoio/acompanhar.html", {
+        "d": d,
+        "erro": erro,
+        "codigo": codigo,
+        "status_choices": Denuncia.STATUS_CHOICES,
+    })
 
 
-# ---------- coordenação ----------
-
+#coordenação
 @staff
 def painel(request):
     qs = Denuncia.objects.all()
@@ -72,20 +75,21 @@ def painel(request):
     todas = Denuncia.objects.all()
     total = todas.count() or 1
 
-    def contagem(campo, choices):
-        nomes = dict(choices)
+    def contagem(campo):
+        nomes = dict(Denuncia._meta.get_field(campo).flatchoices)  # flatchoices aceita opções agrupadas
         linhas = [{"nome": nomes[r[campo]], "n": r["n"], "pct": round(100 * r["n"] / total)}
                   for r in todas.values(campo).annotate(n=Count("id")).order_by("-n")]
         return linhas
 
     return render(request, "apoio/painel.html", {
+        "secao": "painel",
         "denuncias": qs,
         "status_atual": status,
-        "status_choices": Denuncia.Status.choices,
-        "abertas": todas.exclude(status=Denuncia.Status.ENCERRADA).count(),
-        "urgentes": sum(1 for d in todas.exclude(status=Denuncia.Status.ENCERRADA) if d.urgente),
-        "por_tipo": contagem("tipo", Denuncia.Tipo.choices),
-        "por_plataforma": contagem("plataforma", Denuncia.Plataforma.choices),
+        "status_choices": Denuncia.STATUS_CHOICES,
+        "abertas": todas.exclude(status="encerrada").count(),
+        "urgentes": sum(1 for d in todas.exclude(status="encerrada") if d.urgente),
+        "por_tipo": contagem("tipo"),
+        "por_plataforma": contagem("plataforma"),
     })
 
 
@@ -96,7 +100,7 @@ def detalhe(request, pk):
     if form.is_valid():
         form.save()
         return redirect("detalhe", pk=pk)
-    return render(request, "apoio/detalhe.html", {"d": d, "form": form})
+    return render(request, "apoio/detalhe.html", {"d": d, "form": form, "secao": "painel"})
 
 
 @staff

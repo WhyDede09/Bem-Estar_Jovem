@@ -19,7 +19,7 @@
           <span class="font-mono text-sm text-base-content/60">{{ d.protocolo }}</span>
         </div>
         <dl class="grid grid-cols-3 gap-y-1 text-sm">
-          <dt class="font-semibold">Plataforma</dt><dd class="col-span-2">{{ d.get_plataforma_display }}</dd>
+          <dt class="font-semibold">Onde</dt><dd class="col-span-2">{{ d.get_plataforma_display }}</dd>
           <dt class="font-semibold">Quem relata</dt><dd class="col-span-2">{{ d.get_quem_display }}</dd>
           <dt class="font-semibold">Quando</dt><dd class="col-span-2">{{ d.quando|default:"não informado" }}</dd>
           <dt class="font-semibold">Recebido</dt><dd class="col-span-2">{{ d.criada|date:"d/m/Y H:i" }}</dd>

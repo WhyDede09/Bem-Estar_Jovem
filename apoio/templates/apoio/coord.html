@@ -1,18 +1,44 @@
 {% extends "apoio/base.html" %}
-{% comment %}Layout do link da COORDENAÇÃO (/coordenacao/).{% endcomment %}
+{% comment %}Layout do link da COORDENAÇÃO (/coordenacao/): barra no topo (largura total) + menu lateral (drawer no celular).{% endcomment %}
 {% block pagina %}
-<div class="flex min-h-screen flex-col">
-  <header class="navbar bg-neutral text-neutral-content shadow">
-    <div class="mx-auto flex w-full max-w-6xl items-center px-2">
-      <a href="{% url 'painel' %}" class="btn btn-ghost text-lg font-bold">
-        <i class="bi bi-shield-fill-check text-accent"></i> Escudo <span class="badge badge-secondary badge-sm">Coordenação</span></a>
-      <div class="flex-1"></div>
-      {% if user.is_staff %}
-      <span class="hidden px-2 text-sm opacity-80 sm:inline">{{ user.get_full_name|default:user.username }}</span>
-      <form method="post" action="{% url 'sair' %}">{% csrf_token %}<button class="btn btn-ghost btn-sm"><i class="bi bi-box-arrow-right"></i> Sair</button></form>
-      {% endif %}
-    </div>
-  </header>
-  <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{% block corpo %}{% endblock %}</main>
+<header class="navbar sticky top-0 z-50 h-16 border-b-2 border-ink bg-base-100 px-2 sm:px-4">
+  {% if user.is_staff %}
+  <label for="menu-coord" class="btn btn-ghost btn-square lg:hidden" aria-label="Abrir menu"><i class="bi bi-list text-xl"></i></label>
+  {% endif %}
+  <a href="{% url 'painel' %}" class="flex items-center gap-3 px-2">
+    <span class="grid size-9 place-items-center border-2 border-ink bg-primary text-primary-content"><i class="bi bi-shield-fill-check"></i></span>
+    <span class="titulo border-l-2 border-ink pl-3 text-lg">COLÉGIO ESPERANÇA</span>
+    <span class="badge badge-accent hidden sm:inline-flex">Coordenação</span>
+  </a>
+  <div class="flex-1"></div>
+  {% if user.is_staff %}
+  <span class="hidden px-3 text-sm font-semibold sm:inline">{{ user.get_full_name|default:user.username }}</span>
+  <form method="post" action="{% url 'sair' %}">{% csrf_token %}<button class="btn btn-sm bg-base-100"><i class="bi bi-box-arrow-right"></i> Sair</button></form>
+  {% endif %}
+</header>
+
+<div class="drawer {% if user.is_staff %}lg:drawer-open{% endif %}">
+  <input id="menu-coord" type="checkbox" class="drawer-toggle" aria-label="Abrir menu">
+
+  <div class="drawer-content min-h-[calc(100dvh-4rem)]">
+    <main class="w-full px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{% block corpo %}{% endblock %}</main>
+  </div>
+
+  {% if user.is_staff %}
+  <div class="drawer-side z-40 lg:top-16 lg:h-[calc(100dvh-4rem)]">
+    <label for="menu-coord" class="drawer-overlay" aria-label="Fechar menu"></label>
+    <aside class="min-h-full w-60 border-r-2 border-ink bg-base-100 pt-6">
+      {% with s=request.GET.status %}
+      <ul class="menu w-full gap-1 px-3 text-[0.95rem]">
+        <li><a href="{% url 'painel' %}" class="{% if secao == 'painel' and not s %}bg-accent font-bold text-ink border-2 border-ink{% endif %}"><i class="bi bi-house text-lg"></i> Painel</a></li>
+        <li><a href="{% url 'painel' %}?status=recebida" class="{% if s == 'recebida' or s == 'analise' %}bg-accent font-bold text-ink border-2 border-ink{% endif %}"><i class="bi bi-file-earmark-text text-lg"></i> Relatos</a></li>
+        <li><a href="{% url 'painel' %}?status=acompanhamento" class="{% if s == 'acompanhamento' %}bg-accent font-bold text-ink border-2 border-ink{% endif %}"><i class="bi bi-people text-lg"></i> Acompanhamento</a></li>
+        <li class="menu-disabled"><span title="Em breve"><i class="bi bi-bar-chart text-lg"></i> Relatórios <span class="badge badge-ghost badge-xs">em breve</span></span></li>
+        <li><a href="/admin/"><i class="bi bi-gear text-lg"></i> Configurações</a></li>
+      </ul>
+      {% endwith %}
+    </aside>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}

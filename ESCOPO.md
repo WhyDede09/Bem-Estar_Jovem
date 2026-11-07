@@ -1,4 +1,4 @@
-# Escudo: escopo do projeto
+# Sistema de Denúncia · Colégio Esperança: escopo do projeto
 
 > Hackathon: **Bem-Estar e Saúde Mental do Jovem** (apoio emocional, combate ao cyberbullying e rotinas saudáveis)
 
@@ -105,7 +105,7 @@ Oferecer um canal **seguro, anônimo e orientador**, que:
 | Interatividade | JavaScript (vanilla) | ES2020+ | Guia em etapas, instruções por plataforma, copiar frases e protocolo, "Sair rápido", mostrar e ocultar a identificação |
 | Versionamento | Git + GitHub | — | `WhyDede09/Bem-Estar_Jovem` |
 
-**Recursos do Django usados:** `ModelForm` com validação, `TextChoices`, `LoginView` e `LogoutView`,
+**Recursos do Django usados:** `ModelForm` com validação, `choices` no model, `LoginView` e `LogoutView`,
 `staff_member_required`, `FileSystemStorage` privado, `FileResponse`, sessões, proteção CSRF e um
 management command (`demo`).
 

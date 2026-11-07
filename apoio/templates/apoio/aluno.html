@@ -2,22 +2,28 @@
 {% comment %}Layout do link dos ALUNOS: não tem nenhum link para a coordenação.{% endcomment %}
 {% block pagina %}
 <div class="flex min-h-screen flex-col">
-  <header class="navbar bg-gradient-to-r from-neutral to-primary text-primary-content shadow">
-    <div class="mx-auto flex w-full max-w-5xl items-center px-2">
-      <a href="{% url 'inicio' %}" class="btn btn-ghost text-xl font-bold"><i class="bi bi-shield-fill-check text-accent"></i> Escudo</a>
+  <header class="border-b-2 border-ink bg-base-100">
+    <div class="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-3">
+      <a href="{% url 'inicio' %}" class="flex items-center gap-3">
+        <span class="grid size-10 place-items-center border-2 border-ink bg-primary text-primary-content"><i class="bi bi-shield-fill-check text-lg"></i></span>
+        <span class="border-l-2 border-ink pl-3 leading-tight">
+          <span class="titulo block text-lg">COLÉGIO ESPERANÇA</span>
+          <span class="rotulo">Sistema de denúncia</span>
+        </span>
+      </a>
       <div class="flex-1"></div>
-      <a href="{% url 'acompanhar' %}" class="btn btn-ghost btn-sm"><i class="bi bi-search"></i><span class="hidden sm:inline">Acompanhar relato</span></a>
+      <a href="{% url 'acompanhar' %}" class="btn btn-sm bg-base-100"><i class="bi bi-search"></i><span class="hidden sm:inline">Acompanhar relato</span></a>
     </div>
   </header>
 
-  <main class="mx-auto w-full max-w-5xl flex-1 px-4 py-8">{% block corpo %}{% endblock %}</main>
+  <main class="{% block main_classes %}mx-auto w-full max-w-5xl flex-1 px-4 pt-8 pb-24{% endblock %}">{% block corpo %}{% endblock %}</main>
 
-  <footer class="border-t border-base-300 bg-base-100 px-4 py-4 text-sm text-base-content/70">
-    <div class="mx-auto max-w-5xl">
+  <footer class="border-t-2 border-ink bg-base-100 px-4 py-4 text-sm text-base-content/70">
+    <div class="mx-auto max-w-6xl">
       <i class="bi bi-telephone"></i> Precisa conversar agora? <strong class="text-base-content">CVV 188</strong> (24h, gratuito, sigiloso) ·
       Em perigo: <strong class="text-base-content">190</strong> ·
       Crimes na internet: <a class="link link-primary" href="https://new.safernet.org.br/denuncie" target="_blank" rel="noopener">SaferNet</a>
-      <p class="mt-1 text-xs">O Escudo orienta e encaminha. Não substitui profissionais de saúde nem faz diagnóstico.</p>
+      <p class="mt-1 text-xs">Este sistema orienta e encaminha. Não substitui profissionais de saúde nem faz diagnóstico.</p>
     </div>
   </footer>
 </div>
