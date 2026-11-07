@@ -62,7 +62,7 @@
   </section>
 
   <div class="d-flex justify-content-between mt-3">
-    <button class="btn btn-outline-secondary" id="voltar" disabled><i class="bi bi-arrow-left"></i> Voltar</button>
+    <button class="btn btn-outline-secondary" id="voltar"><i class="bi bi-arrow-left"></i> Voltar</button>
     <button class="btn btn-primary" id="avancar">Próximo <i class="bi bi-arrow-right"></i></button>
   </div>
 </div>
@@ -90,11 +90,13 @@
     passos.forEach((p, k) => p.classList.toggle("d-none", k !== i));
     document.getElementById("barra").style.width = `${(i + 1) * 100 / passos.length}%`;
     document.getElementById("contador").textContent = `Passo ${i + 1} de ${passos.length}`;
-    document.getElementById("voltar").disabled = i === 0;
+    document.getElementById("voltar").innerHTML = i === 0 ? "<i class=\"bi bi-house\"></i> Início" : "<i class=\"bi bi-arrow-left\"></i> Voltar";
     document.getElementById("avancar").classList.toggle("invisible", i === passos.length - 1);
     window.scrollTo({ top: 0 });
   };
   document.getElementById("avancar").addEventListener("click", () => ir(Math.min(atual + 1, passos.length - 1)));
-  document.getElementById("voltar").addEventListener("click", () => ir(Math.max(atual - 1, 0)));
+  ir(0);
+  // passo 1: volta para o início em vez de ficar desativado
+  document.getElementById("voltar").addEventListener("click", () => atual === 0 ? location.assign("{% url 'inicio' %}") : ir(atual - 1));
 </script>
 {% endblock %}
