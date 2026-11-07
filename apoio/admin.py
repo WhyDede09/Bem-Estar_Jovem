@@ -15,6 +15,7 @@ class DenunciaAdmin (admin.ModelAdmin):
     list_per_page = 30
     show_full_result_count = False
 
+    #Formulário
     readonly_fields = (
         "protocolo", "alerta", "criada", "atualizada",
         "quem", "tipo", "plataforma", "quando", "descricao",
@@ -36,11 +37,10 @@ class DenunciaAdmin (admin.ModelAdmin):
     #Colunas
     @admin.display(description="Prioridade", ordering="risco")
     def alerta(self, obj):
-        # format_html exige argumentos no Django 6 (sem eles, TypeError)
         if obj.risco:
-            return format_html('<b style="color:{}">{}</b>', "#c62828", "⚠ RISCO AGORA")
-        if obj.urgente:
-            return format_html('<b style="color:{}">{}</b>', "#ef6c00", "▲ Urgente")
+            return format_html('<b style="color:#c62828">⚠ RISCO AGORA</b>')
+        if obj.urgente: 
+            return format_html('<b style="color:#ef6c00">▲ Urgente</b>')
         return "—"
 
     @admin.display(description="Prova anexada")
@@ -53,24 +53,25 @@ class DenunciaAdmin (admin.ModelAdmin):
         n = queryset.update(status=novo_status, atualizada=timezone.now())
         self.message_user(request, f"{n} denúncia(s) atualizada(s).")
 
-    # status são os valores de Denuncia.STATUS_CHOICES
     @admin.action(description="Marcar como Em análise")
     def marcar_analise(self, request, queryset):
-        self._mudar_status(request, queryset, "analise")
+        self._mudar_status(request, queryset, Denuncia.Status.ANALISE)
 
     @admin.action(description="Marcar como Em acompanhamento")
     def marcar_acompanhamento(self, request, queryset):
-        self._mudar_status(request, queryset, "acompanhamento")
+        self._mudar_status(request, queryset, Denuncia.Status.ACOMPANHAMENTO)
 
     @admin.action(description="Encerrar denúncias")
     def encerrar(self, request, queryset):
-        self._mudar_status(request, queryset, "encerrada")
+        self._mudar_status(request, queryset, Denuncia.Status.ENCERRADA)
 
     def has_add_permission(self, request):
         return False
 
     def has_delete_permission(self, request, obj=None):
         return request.user.is_superuser
+
+
 
 
 admin.site.register(Denuncia, DenunciaAdmin)
