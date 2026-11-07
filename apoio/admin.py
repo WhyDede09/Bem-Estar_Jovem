@@ -2,7 +2,7 @@ from django.contrib import admin
 from apoio.models import Denuncia
 from django.utils import timezone
 from django.utils.html import format_html
-# Register your models here.
+
 
 class DenunciaAdmin (admin.ModelAdmin):
     list_display = (
@@ -19,7 +19,7 @@ class DenunciaAdmin (admin.ModelAdmin):
     def alerta(self, obj):
         if obj.risco:
             return format_html('<b style="color:#c62828">⚠ RISCO AGORA</b>')
-        if obj.urgente:  # ameaça sem risco declarado
+        if obj.urgente:
             return format_html('<b style="color:#ef6c00">▲ Urgente</b>')
         return "—"
 
