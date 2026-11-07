@@ -11,7 +11,7 @@ from .models import Denuncia
 staff = staff_member_required(login_url="login")
 
 
-# ---------- aluno (sem login: pedir conta afasta quem tem medo de se expor) ----------
+#alunos
 
 def inicio(request):
     return render(request, "apoio/inicio.html")
@@ -30,7 +30,6 @@ def denunciar(request):
                         initial={"quem": request.GET.get("quem", "comigo")})
     if form.is_valid():
         d = form.save()
-        # protocolo vai pela sessão, não pela URL (não fica no histórico do navegador)
         request.session["ultimo_protocolo"] = d.protocolo
         return redirect("enviada")
     return render(request, "apoio/denunciar.html", {"form": form})
@@ -47,14 +46,13 @@ def enviada(request):
 def acompanhar(request):
     d, erro = None, False
     codigo = request.POST.get("protocolo", "").strip().upper()
-    if codigo:  # POST: o código não aparece na URL
+    if codigo:
         d = Denuncia.objects.filter(protocolo=codigo).first()
         erro = d is None
     return render(request, "apoio/acompanhar.html", {"d": d, "erro": erro, "codigo": codigo})
 
 
-# ---------- coordenação ----------
-
+#coordenação
 @staff
 def painel(request):
     qs = Denuncia.objects.all()

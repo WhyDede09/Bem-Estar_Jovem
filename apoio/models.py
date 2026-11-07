@@ -6,10 +6,8 @@ from django.db import models
 
 
 def _provas_storage():
-    # pasta privada, sem URL pública: o download passa pela view da coordenação
     return FileSystemStorage(location=settings.PROVAS_DIR, base_url=None)
 
-# Sem letras/números ambíguos (0/O, 1/I/L): o aluno vai digitar isso depois.
 _ALFABETO = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
 
 
@@ -19,7 +17,6 @@ def novo_protocolo() -> str:
 
 
 class Denuncia(models.Model):
-    """Um relato. Guarda o FATO (o que, onde, quando), nunca um perfil emocional do aluno."""
 
     class Tipo(models.TextChoices):
         OFENSA = "ofensa", "Ofensas ou humilhação"
@@ -74,6 +71,6 @@ class Denuncia(models.Model):
         return self.risco or self.tipo == self.Tipo.AMEACA
 
     def save(self, *args, **kwargs):
-        if self.anonima:  # anônimo de verdade: nem guarda o que foi digitado
+        if self.anonima: 
             self.nome = self.contato = ""
         super().save(*args, **kwargs)
