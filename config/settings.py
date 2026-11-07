@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +41,13 @@ INSTALLED_APPS = [
     'apoio',
     'accounts',
 ]
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'Administração',
+    'site_header': 'Bem-Estar Jovem',
+    'site_brand': 'Bem-Estar Jovem',
+    'welcome_sign': 'Bem-vindo à administração',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
