@@ -18,9 +18,9 @@ class DenunciaAdmin (admin.ModelAdmin):
     @admin.display(description="Prioridade", ordering="risco")
     def alerta(self, obj):
         if obj.risco:
-            return format_html('<b style="color:#c62828">⚠ RISCO AGORA</b>')
+            return format_html('<b style="color:{}">{}</b>', "#c62828", "⚠ RISCO AGORA")
         if obj.urgente:  # ameaça sem risco declarado
-            return format_html('<b style="color:#ef6c00">▲ Urgente</b>')
+            return format_html('<b style="color:{}">{}</b>', "#ef6c00", "▲ Urgente")
         return "—"
 
     @admin.display(description="Prova anexada")
