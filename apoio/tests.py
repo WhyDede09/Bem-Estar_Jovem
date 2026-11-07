@@ -14,8 +14,8 @@ class ProtocoloTests(TestCase):
 class DenunciaTests(TestCase):
     def criar_denuncia(self, **campos):
         valores = {
-            "tipo": Denuncia.Tipo.OFENSA,
-            "plataforma": Denuncia.Plataforma.WHATSAPP,
+            "tipo": "ofensa",
+            "plataforma": "whatsapp",
             "descricao": "Relato de teste",
         }
         valores.update(campos)
@@ -29,7 +29,7 @@ class DenunciaTests(TestCase):
 
     def test_denuncia_e_urgente_se_houver_risco_ou_ameaca(self):
         com_risco = self.criar_denuncia(risco=True)
-        ameaca = self.criar_denuncia(tipo=Denuncia.Tipo.AMEACA)
+        ameaca = self.criar_denuncia(tipo="ameaca")
         sem_urgencia = self.criar_denuncia()
 
         self.assertTrue(com_risco.urgente)

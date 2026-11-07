@@ -21,8 +21,8 @@ class DenunciaForm(forms.ModelForm):
 
     def __init__(self, *a, **kw):
         super().__init__(*a, **kw)
-        self.fields["tipo"].choices = [("", "Escolha…"), *Denuncia.Tipo.choices]
-        self.fields["plataforma"].choices = [("", "Escolha…"), *Denuncia.Plataforma.choices]
+        self.fields["tipo"].choices = [("", "Escolha…"), *Denuncia.TIPO_CHOICES]
+        self.fields["plataforma"].choices = [("", "Escolha…"), *Denuncia.PLATAFORMA_CHOICES]
         for nome, campo in self.fields.items():
             w = campo.widget  # classes do daisyUI
             w.attrs.setdefault("aria-label", str(campo.label))  # o legend do fieldset não rotula o input

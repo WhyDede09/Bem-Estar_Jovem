@@ -57,7 +57,12 @@ def acompanhar(request):
     if codigo:
         d = Denuncia.objects.filter(protocolo=codigo).first()
         erro = d is None
-    return render(request, "apoio/acompanhar.html", {"d": d, "erro": erro, "codigo": codigo})
+    return render(request, "apoio/acompanhar.html", {
+        "d": d,
+        "erro": erro,
+        "codigo": codigo,
+        "status_choices": Denuncia.STATUS_CHOICES,
+    })
 
 
 #coordenação
@@ -80,11 +85,11 @@ def painel(request):
         "secao": "painel",
         "denuncias": qs,
         "status_atual": status,
-        "status_choices": Denuncia.Status.choices,
-        "abertas": todas.exclude(status=Denuncia.Status.ENCERRADA).count(),
-        "urgentes": sum(1 for d in todas.exclude(status=Denuncia.Status.ENCERRADA) if d.urgente),
-        "por_tipo": contagem("tipo", Denuncia.Tipo.choices),
-        "por_plataforma": contagem("plataforma", Denuncia.Plataforma.choices),
+        "status_choices": Denuncia.STATUS_CHOICES,
+        "abertas": todas.exclude(status="encerrada").count(),
+        "urgentes": sum(1 for d in todas.exclude(status="encerrada") if d.urgente),
+        "por_tipo": contagem("tipo", Denuncia.TIPO_CHOICES),
+        "por_plataforma": contagem("plataforma", Denuncia.PLATAFORMA_CHOICES),
     })
 
 

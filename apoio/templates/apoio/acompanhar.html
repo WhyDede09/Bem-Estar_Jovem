@@ -17,7 +17,7 @@
     <div class="card-body">
       <p class="text-sm text-base-content/60">Enviado em {{ d.criada|date:"d/m/Y" }}</p>
       <ul class="steps steps-vertical sm:steps-horizontal my-2 w-full">
-        {% for valor, nome in d.Status.choices %}
+        {% for valor, nome in status_choices %}
           <li class="step {% if forloop.counter <= d.etapa %}step-primary{% endif %}">{{ nome }}</li>
         {% endfor %}
       </ul>

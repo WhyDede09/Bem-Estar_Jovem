@@ -5,38 +5,38 @@ from .storage import provas_storage
 
 
 class Denuncia(models.Model):
-
-    class Tipo(models.TextChoices):
-        OFENSA = "ofensa", "Ofensas ou humilhação"
-        EXPOSICAO = "exposicao", "Exposição de foto, vídeo ou conversa"
-        AMEACA = "ameaca", "Ameaça"
-        DISCRIMINACAO = "discriminacao", "Discriminação (racismo, LGBTfobia, etc.)"
-        PERFIL_FALSO = "perfil_falso", "Perfil falso se passando por alguém"
-        EXCLUSAO = "exclusao", "Exclusão proposital de grupos"
-        OUTRO = "outro", "Outro"
-
-    class Plataforma(models.TextChoices):
-        WHATSAPP = "whatsapp", "WhatsApp"
-        INSTAGRAM = "instagram", "Instagram"
-        TIKTOK = "tiktok", "TikTok"
-        DISCORD = "discord", "Discord"
-        JOGO = "jogo", "Jogo online"
-        OUTRA = "outra", "Outra"
-
-    class Status(models.TextChoices):
-        RECEBIDA = "recebida", "Recebida"
-        ANALISE = "analise", "Em análise"
-        ACOMPANHAMENTO = "acompanhamento", "Em acompanhamento"
-        ENCERRADA = "encerrada", "Encerrada"
-
-    class Quem(models.TextChoices):
-        COMIGO = "comigo", "Aconteceu comigo"
-        COLEGA = "colega", "Vi acontecer com um colega"
+    TIPO_CHOICES = [
+        ("ofensa", "Ofensas ou humilhação"),
+        ("exposicao", "Exposição de foto, vídeo ou conversa"),
+        ("ameaca", "Ameaça"),
+        ("discriminacao", "Discriminação (racismo, LGBTfobia, etc.)"),
+        ("perfil_falso", "Perfil falso se passando por alguém"),
+        ("exclusao", "Exclusão proposital de grupos"),
+        ("outro", "Outro"),
+    ]
+    PLATAFORMA_CHOICES = [
+        ("whatsapp", "WhatsApp"),
+        ("instagram", "Instagram"),
+        ("tiktok", "TikTok"),
+        ("discord", "Discord"),
+        ("jogo", "Jogo online"),
+        ("outra", "Outra"),
+    ]
+    STATUS_CHOICES = [
+        ("recebida", "Recebida"),
+        ("analise", "Em análise"),
+        ("acompanhamento", "Em acompanhamento"),
+        ("encerrada", "Encerrada"),
+    ]
+    QUEM_CHOICES = [
+        ("comigo", "Aconteceu comigo"),
+        ("colega", "Vi acontecer com um colega"),
+    ]
 
     protocolo = models.CharField(max_length=13, unique=True, default=novo_protocolo, editable=False)
-    quem = models.CharField(max_length=10, choices=Quem.choices, default=Quem.COMIGO)
-    tipo = models.CharField(max_length=20, choices=Tipo.choices)
-    plataforma = models.CharField(max_length=20, choices=Plataforma.choices)
+    quem = models.CharField(max_length=10, choices=QUEM_CHOICES, default="comigo")
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
+    plataforma = models.CharField(max_length=20, choices=PLATAFORMA_CHOICES)
     quando = models.CharField("Quando aconteceu", max_length=60, blank=True,
                               help_text="Ex.: ontem à noite, semana passada, ainda está acontecendo")
     descricao = models.TextField("O que aconteceu", max_length=3000)
@@ -46,7 +46,7 @@ class Denuncia(models.Model):
     contato = models.CharField("Turma ou contato", max_length=100, blank=True)
     risco = models.BooleanField("Alguém corre risco agora", default=False)
 
-    status = models.CharField(max_length=20, choices=Status.choices, default=Status.RECEBIDA)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="recebida")
     resposta = models.TextField("Mensagem para quem relatou", blank=True)
     criada = models.DateTimeField(auto_now_add=True)
     atualizada = models.DateTimeField(auto_now=True)
@@ -72,11 +72,11 @@ class Denuncia(models.Model):
     @property
     def etapa(self) -> int:
         """Posição do status (1..4), para a linha do tempo."""
-        return list(self.Status.values).index(self.status) + 1
+        return [valor for valor, _ in self.STATUS_CHOICES].index(self.status) + 1
 
     @property
     def urgente(self) -> bool:
-        return self.risco or self.tipo == self.Tipo.AMEACA
+        return self.risco or self.tipo == "ameaca"
 
     def save(self, *args, **kwargs):
         if self.anonima: 
